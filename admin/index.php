@@ -1,35 +1,31 @@
 <?php
-	session_start();
- include('../db/connect.php'); 
+    session_start();
+ include '../db/connect.php';
 ?>
 <?php
-	// session_destroy();
-	// unset('dangnhap');
-	if(isset($_POST['dangnhap'])) {
-		$taikhoan = $_POST['taikhoan'];
-		$matkhau = $_POST['matkhau'];
+    // session_destroy();
+    // unset('dangnhap');
+    if (isset($_POST['dangnhap'])) {
+        $taikhoan = $_POST['taikhoan'];
+        $matkhau = $_POST['matkhau'];
 		
-		if($taikhoan=='' || $matkhau ==''){
-			echo '<div style="color: red;background-color: black;boder:1px solid black;text-align: center;width: 80%;margin: auto;">Xin nhập đủ</div>';
-		}else{
-			// $sql_select_admin = oci_parse($con,"SELECT * FROM tbl_admin WHERE email='$taikhoan' AND password='$matkhau' LIMIT 1");
-			// oci_execute($sql_select_admin);
-			// $row_dangnhap = oci_fetch_array($sql_select_admin);
-			// $count = oci_num_rows($sql_select_admin);
-			// if($count>0){
-				if($taikhoan == 'admin@gmail.com' && $matkhau =='123456'){
-                    
-				
-				$_SESSION['dangnhap'] = $row_dangnhap['ADMIN_NAME'];
-				$_SESSION['admin_id'] = $row_dangnhap['ADMIN_ID'];
-				header('Location: dashboard.php');
-			
-			}
-			else{
-				echo '<p div style="color: red;background-color: black;boder:1px solid black;text-align: center;width: 80%;margin: auto;">Tài khoản hoặc mật khẩu sai</p>';
-			}
-		}
-	}
+        if ($taikhoan == '' || $matkhau == '') {
+            echo '<div style="color: red;background-color: black;boder:1px solid black;text-align: center;width: 80%;margin: auto;">Vui lòng nhập tài khoản và mật khẩu</div>';
+        } else {
+            $sql_select_admin = oci_parse($con,"SELECT * FROM tbl_admin WHERE email='$taikhoan' AND password='$matkhau' ORDER BY email");
+            oci_execute($sql_select_admin);
+            $row_dangnhap = oci_fetch_array($sql_select_admin);
+            $count = oci_num_rows($sql_select_admin);
+            if($count>0){
+            //if ($taikhoan == 'admin@gmail.com' && $matkhau == '123456') {
+                $_SESSION['dangnhap'] = $row_dangnhap['ADMIN_NAME'];
+                $_SESSION['admin_id'] = $row_dangnhap['ADMIN_ID'];
+                header('Location: dashboard.php');
+            } else {
+                echo '<p div style="color: red;background-color: black;boder:1px solid black;text-align: center;width: 80%;margin: auto;">Tài khoản hoặc mật khẩu không đúng</p>';
+            }
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">

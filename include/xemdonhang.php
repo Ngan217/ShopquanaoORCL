@@ -1,15 +1,15 @@
 <?php
-	if(isset($_GET['huydon'])&& isset($_GET['magiaodich'])){
-		$huydon = $_GET['huydon'];
-		$magiaodich = $_GET['magiaodich'];
-	}else{
-		$huydon = '';
-		$magiaodich = '';
-	}
-	$sql_update_donhang = oci_parse($con,"UPDATE SYS.tbl_donhang SET huydon='$huydon' WHERE mahang='$magiaodich'");
-	oci_execute($sql_update_donhang);
-	$sql_update_giaodich = oci_parse($con,"UPDATE SYS.tbl_giaodich SET huydon='$huydon' WHERE magiaodich='$magiaodich'");
-	oci_execute($sql_update_giaodich);
+    if (isset($_GET['huydon']) && isset($_GET['magiaodich'])) {
+        $huydon = $_GET['huydon'];
+        $magiaodich = $_GET['magiaodich'];
+    } else {
+        $huydon = '';
+        $magiaodich = '';
+    }
+    $sql_update_donhang = oci_parse($con, "UPDATE tbl_donhang SET huydon='$huydon' WHERE mahang='$magiaodich'");
+    oci_execute($sql_update_donhang);
+    $sql_update_giaodich = oci_parse($con, "UPDATE tbl_giaodich SET huydon='$huydon' WHERE magiaodich='$magiaodich'");
+    oci_execute($sql_update_giaodich);
 ?>
 <!-- top Products -->
 	<div class="ads-grid py-sm-5 py-4">
@@ -25,21 +25,21 @@
 						
 							<div class="row">
 								<?php
-								if(isset($_SESSION['dangnhap_home'])){
-									echo 'Đơn hàng : '.$_SESSION['dangnhap_home'];
-								} 
-								?>
+                                if (isset($_SESSION['dangnhap_home'])) {
+                                    echo 'Đơn hàng : '.$_SESSION['dangnhap_home'];
+                                }
+                                ?>
 							<div class="col-md-12">
 								
 								<?php
-								if(isset($_GET['khachhang'])){
-									$id_khachhang = $_GET['khachhang'];
-								}else{
-									$id_khachhang = '';
-								}
-								$sql_select = oci_parse($con,"SELECT * FROM SYS.tbl_giaodich WHERE tbl_giaodich.khachhang_id='$id_khachhang' /*GROUP BY tbl_giaodich.magiaodich*/"); 
-								oci_execute($sql_select);
-								?> 
+                                if (isset($_GET['khachhang'])) {
+                                    $id_khachhang = $_GET['khachhang'];
+                                } else {
+                                    $id_khachhang = '';
+                                }
+                                $sql_select = oci_parse($con, "SELECT * FROM tbl_giaodich WHERE tbl_giaodich.khachhang_id='$id_khachhang' /*GROUP BY tbl_giaodich.magiaodich*/");
+                                oci_execute($sql_select);
+                                ?> 
 								<table class="table table-bordered ">
 									<tr>
 										<th>Thứ tự</th>
@@ -51,44 +51,40 @@
 										<th>Yêu cầu</th>
 									</tr>
 									<?php
-									$i = 0;
-									while($row_donhang = oci_fetch_array($sql_select)){ 
-										$i++;
-									?> 
+                                    $i = 0;
+                                    while ($row_donhang = oci_fetch_array($sql_select)) {
+                                        ++$i; ?> 
 									<tr>
 										<td><?php echo $i; ?></td>
 										
 										<td><?php echo $row_donhang['MAGIAODICH']; ?></td>
 									
 										
-										<td><?php echo $row_donhang['NGAYTHANG'] ?></td>
-										<td><a href="index.php?quanly=xemdonhang&khachhang=<?php echo $_SESSION['khachhang_id'] ?>&magiaodich=<?php echo $row_donhang['MAGIAODICH'] ?>">Xem chi tiết</a></td>
-										<td><?php 
-										if($row_donhang['TINHTRANGDON']==0){
-											echo 'Đã đặt hàng';
-										}else{
-											echo 'Đã xử lý | Đang giao hàng';
-										}
-										?></td>
+										<td><?php echo $row_donhang['NGAYTHANG']; ?></td>
+										<td><a href="index.php?quanly=xemdonhang&khachhang=<?php echo $_SESSION['khachhang_id']; ?>&magiaodich=<?php echo $row_donhang['MAGIAODICH']; ?>">Xem chi tiết</a></td>
+										<td><?php if ($row_donhang['TINHTRANGDON'] == 0) {
+                                            echo 'Đã đặt hàng';
+                                        } else {
+                                            echo 'Đã xử lý | Đang giao hàng';
+                                        } ?></td>
 										<td>
 											<?php
-											if($row_donhang['HUYDON']==0){ 
-											?>
-											<a href="index.php?quanly=xemdonhang&khachhang=<?php echo $_SESSION['khachhang_id'] ?>&magiaodich=<?php echo $row_donhang['MAGIAODICH'] ?>&huydon=1">Yêu cầu hủy</a>
+                                            if ($row_donhang['HUYDON'] == 0) {
+                                                ?>
+											<a href="index.php?quanly=xemdonhang&khachhang=<?php echo $_SESSION['khachhang_id']; ?>&magiaodich=<?php echo $row_donhang['MAGIAODICH']; ?>&huydon=1">Yêu cầu hủy</a>
 											<?php
-										}elseif($row_donhang['HUYDON']==1){											
-											?>
+                                            } elseif ($row_donhang['HUYDON'] == 1) {
+                                                ?>
 											<p>Đang chờ hủy...</p>
 											<?php
-											}else{
-												echo 'Đã hủy';
-											}
-											?>
+                                            } else {
+                                                echo 'Đã hủy';
+                                            } ?>
 										</td>
 									</tr>
 									 <?php
-									} 
-									?> 
+                                    }
+                                    ?> 
 								</table>
 							</div>
 
@@ -96,16 +92,15 @@
 							<div class="col-md-12">
 								<p>Chi tiết đơn hàng</p><br>
 								<?php
-								if(isset($_GET['magiaodich'])){
-									$magiaodich = $_GET['magiaodich'];
-								}else{
-									$magiaodich = '';
-								}
-								
-								
-							$sql_select = oci_parse($con,"SELECT * FROM SYS.tbl_giaodich,SYS.tbl_khachhang,SYS.tbl_sanpham WHERE tbl_giaodich.sanpham_id=tbl_sanpham.sanpham_id AND tbl_khachhang.khachhang_id=tbl_giaodich.khachhang_id AND tbl_giaodich.magiaodich='$magiaodich' ORDER BY tbl_giaodich.giaodich_id DESC"); 
-								oci_execute($sql_select);
-								?> 
+                                if (isset($_GET['magiaodich'])) {
+                                    $magiaodich = $_GET['magiaodich'];
+                                } else {
+                                    $magiaodich = '';
+                                }
+
+                            $sql_select = oci_parse($con, "SELECT * FROM tbl_giaodich, tbl_khachhang, tbl_sanpham WHERE tbl_giaodich.sanpham_id=tbl_sanpham.sanpham_id AND tbl_khachhang.khachhang_id=tbl_giaodich.khachhang_id AND tbl_giaodich.magiaodich='$magiaodich' ORDER BY tbl_giaodich.giaodich_id DESC");
+                                oci_execute($sql_select);
+                                ?> 
 								<table class="table table-bordered ">
 									<tr>
 										<th>Thứ tự</th>
@@ -116,10 +111,9 @@
 										
 									</tr>
 									<?php
-									$i = 0;
-									while($row_donhang = oci_fetch_array($sql_select)){ 
-										$i++;
-									?> 
+                                    $i = 0;
+                                    while ($row_donhang = oci_fetch_array($sql_select)) {
+                                        ++$i; ?> 
 									<tr>
 										<td><?php echo $i; ?></td>
 										
@@ -129,13 +123,13 @@
 
 										<td><?php echo $row_donhang['SOLUONG']; ?></td>
 										
-										<td><?php echo $row_donhang['NGAYTHANG'] ?></td>
+										<td><?php echo $row_donhang['NGAYTHANG']; ?></td>
 									
 										
 									</tr>
 									 <?php
-									} 
-									?> 
+                                    }
+                                    ?> 
 								</table>
 							</div>
 							</div>

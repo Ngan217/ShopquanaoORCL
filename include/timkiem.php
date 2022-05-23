@@ -4,7 +4,7 @@
 	$tukhoa = $_POST['search_product'];
 	
 		
-	$sql_product = oci_parse($con,"SELECT * FROM SYS.tbl_sanpham WHERE sanpham_name LIKE '%$tukhoa%' ORDER BY sanpham_id DESC");		
+	$sql_product = oci_parse($con,"SELECT * FROM tbl_sanpham WHERE sanpham_name LIKE '%$tukhoa%' ORDER BY sanpham_id DESC");		
     oci_execute($sql_product);
 	$title = $tukhoa;
 	}		

@@ -43,8 +43,8 @@ CREATE TABLE tbl_admin (
 -- SQLINES DEMO *** liệu cho bảng `tbl_admin`
 --
 
-INSERT INTO tbl_admin (admin_id, email, password, admin_name) VALUES
-(1, 'admin@gmail.com', '123456', 'HƯNG TRẦN');
+INSERT INTO tbl_admin ( email, password, admin_name) VALUES
+('admin@gmail.com', '123456', 'ngan');
 
 -- SQLINES DEMO *** ---------------------------------------
 
@@ -62,16 +62,19 @@ CREATE TABLE tbl_baiviet (
   baiviet_image varchar2(50) NOT NULL
 ) ;
 
+
+
+
 --
 -- SQLINES DEMO *** liệu cho bảng `tbl_baiviet`
 --
 
-INSERT INTO tbl_baiviet (baiviet_id, tenbaiviet, tomtat, noidung, danhmuctin_id, baiviet_image)
- SELECT 1, 'quần jean cách tân (fashing new 2021)', 'Jeans là một loại quần xuất xứ từ các nước phương Tây, và là một trong những biểu tượng của xã hội phương tây vào thế kỷ XX. Cụ thể, nó đã từng ..', 'Jeans (Miền Bắc Việt Nam gọi là quần bò) là một loại quần xuất xứ từ các nước phương Tây, và là một trong những biểu tượng của xã hội phương tây vào thế kỷ XX. Cụ thể, nó đã từng là biểu tượng cho tuổi trẻ, sự phản kháng, tự do và cho chủ nghĩa cá nhân của mọi tầng lớp nhân dân ở phương tây. Đây là phần y phục được bán nhiều nhất trên thế giới. Cả hai giới tính và mọi tầng lớp xã hội, thuộc nhiều nền văn hóa đều có thể mặc jeans.', 1, 'hot20.jpg' FROM dual UNION ALL 
- SELECT 2, 'quần kaki (xu thế thời trang mới 2020)', 'Quần kaki luôn là lựa chọn tối ưu dành cho các bạn nam để tạo cho mình phong cách thời trang trẻ trung nhưng cũng đầy lịch lãm. ', 'Quần kaki luôn là lựa chọn tối ưu dành cho các bạn nam để tạo cho mình phong cách thời trang trẻ trung nhưng cũng đầy lịch lãm. Quần kaki đến từ Hotdeal được thiết kế với 2 túi trước, 2 túi sau, và có nhiều size để bạn thoải mái lựa chọn. Quần được may từ chất liệu kaki có độ bền cao, không bị co rút sợi vải hay phai màu sau một thời gian sử dụng. Dù kết hợp với áo sơ mi hay áo thun thì bạn cũng đều trở nên mạnh mẽ, nam tính hơn trong mắt mọi người.', 2, 'hot17.jpg' FROM dual UNION ALL 
- SELECT 3, 'áo sơ mi tự tin kheo vẻ lịch lãm', 'Ngày nay, áo sơ mi không còn là đặc quyền thời trang dành riêng cho nam giới. Đã có rất nhiều những biến thể trong thiết kế và phong cách của áo sơ mi. Cổ áo sơ mi cũng có nhiều thay đổi với những đường cắt và kích thước khác nhau. Nó thay đổi tùy thuộc vào các xu hướng thời trang khác nhau. Các loại vải cũng đa dạng hơn rất nhiều. Từ vải oxford đến vải cotton.', 'Ngày nay, áo sơ mi không còn là đặc quyền thời trang dành riêng cho nam giới. Đã có rất nhiều những biến thể trong thiết kế và phong cách của áo sơ mi. Cổ áo sơ mi cũng có nhiều thay đổi với những đường cắt và kích thước khác nhau. Nó thay đổi tùy thuộc vào các xu hướng thời trang khác nhau. Các loại vải cũng đa dạng hơn rất nhiều. Từ vải oxford đến vải cotton.rnGiờ đây, áo sơ mi đã trở thành 1 trang phục không thể thiếu trong tủ quần áo của mọi người không phân biệt giới tính, tuổi tác. Bạn hoàn toàn có thể tìm cho mình một chiếc áo sơ mi ở bất kì đâu. Từ những nhãn hiệu thời trang nổi tiếng đến các cửa hàng nhỏ, thậm chí có cả ở trong chợ, trên vỉa hè…rnrnTuy nhiên để có thể sở hữu được một chiếc áo sơ mi vừa vặn, chất liệu tốt nhất với mình, Sơ mi công sở sẽ hướng dẫn bạn những cách chọn áo sơ mi nam từ chất liệu, dáng áo phù hợp với bản thân.. Chúc bạn có thể lựa chọn được 1 chiếc áo sơ mi chất lượng ưng ý./.', 3, 'aosm1.jpg' FROM dual UNION ALL 
- SELECT 5, 'thông tin về áo tay ngắn của shop mình', 'một trong những thương hiệu thời trang nổi tiếng xuất của xứ sở hoa Anh Đào. Những trung tâm thời trang lớn ở Nhật Bản bên trong đều có cửa hàng Beams và thương hiệu này cũng hiện diện ngay cả ở nước ngoài nữa. Thành lập năm 1976, Beams xây dựng hình tượng nhãn hàng thời trang – phụ kiện đường phố thoải mái và chất lượng cao.rnrnrnrn', 'một trong những thương hiệu thời trang nổi tiếng xuất của xứ sở hoa Anh Đào. Những trung tâm thời trang lớn ở Nhật Bản bên trong đều có cửa hàng Beams và thương hiệu này cũng hiện diện ngay cả ở nước ngoài nữa. Thành lập năm 1976, Beams xây dựng hình tượng nhãn hàng thời trang – phụ kiện đường phố thoải mái và chất lượng cao.rnrnrnrnCảm hứng thời trang chính của Beams nhấn mạnh tính cơ bản nhưng vui là chủ yếu. Rất nhiều người chọn lựa Beams vì mẫu mã đáng yêu và chất lượng thì không chê vào đâu được. Sản phẩm của Beams cực kì đa dạng, cho nam, nữ và trẻ em, chưa kể có những bộ thiết kết đặt may riêng.', 4, 'aothun1.jpg' FROM dual UNION ALL 
- SELECT 6, 'thông tin đáng bận tâm về balo nè', 'Ngày nay khi tìm một chiếc balo du lịch người dùng không chỉ quan tâm đến chất lượng sản phẩm mà còn rất chú ý đến mẫu mã và công dụng của chiếc balo đem lại khi sử dụng. Để đáp ứng nhu cầu từ phía người dùng, nhiều hãng sản xuất balo cho ra đời các mẫu balo đa năng với nhiều mẫu mã, ', 'Ngày nay khi tìm một chiếc balo du lịch người dùng không chỉ quan tâm đến chất lượng sản phẩm mà còn rất chú ý đến mẫu mã và công dụng của chiếc balo đem lại khi sử dụng. Để đáp ứng nhu cầu từ phía người dùng, nhiều hãng sản xuất balo cho ra đời các mẫu balo đa năng với nhiều mẫu mã, màu sắc và thiết kế khác nhau giúp khách hàng có nhiều lựa chọn hơn khi mua hàng. Giới thiệu qua về balo đa năng, Balo đa năng là mẫu balo có thể sử dụng cho nhiều trường hợp với nhiều tiện ích mang lại khác nhau, có thể sử dụng thông thường như chiếc balo hoặc thay đổi thành cặp đựng, túi du lịch khi cần. Thông thường các mẫu balo đa năng được thiết kế với kích thước lớn, đựng được nhiều hành lý cần thiết phù hợp sử dụng cho các chuyến công tác hay đi du lịch ngắn ngày. Tại hệ thống cửa hàng của Balo Online có những mẫu balo đa năng đến từ các thương hiệu như Simplecarry, Tucano, Bestlife…với nhiều mẫu mã và màu sắc khác nhau, đều được làm từ những chất liệu cao cấp có độ bền cao. Tại hệ thống Balo Online các sản phẩm đều được đảm bảo là hàng chính hãng, có giá cả phải chăng và đặc biệt có chế độ bảo hành lên đến 10 năm cho các lỗi về khóa, quai đeo và đường chỉ may. Hệ thống bán hàng uy tín số 1 về các kênh online và offline, có chế độ giao hàng nhanh, ship cod toàn quốc, nhiều gói ưu đãi với các đơn hàng khác nhau', 5, 'balo4.jpg' FROM dual;
+INSERT INTO tbl_baiviet ( tenbaiviet, tomtat, noidung, danhmuctin_id, baiviet_image)
+ SELECT  'quần jean cách tân (fashing new 2021)', 'Jeans là một loại quần xuất xứ từ các nước phương Tây, và là một trong những biểu tượng của xã hội phương tây vào thế kỷ XX. Cụ thể, nó đã từng ..', 'Jeans (Mi�?n Bắc Việt Nam g�?i là quần bò) là một loại quần xuất xứ từ các nước phương Tây, và là một trong những biểu tượng của xã hội phương tây vào thế kỷ XX. Cụ thể, nó đã từng là biểu tượng cho tuổi trẻ, sự phản kháng, tự do và cho chủ nghĩa cá nhân của m�?i tầng lớp nhân dân ở phương tây. �?ây là phần y phục được bán nhi�?u nhất trên thế giới. Cả hai giới tính và m�?i tầng lớp xã hội, thuộc nhi�?u n�?n văn hóa đ�?u có thể mặc jeans.', 1, 'hot20.jpg' FROM dual UNION ALL 
+ SELECT  'quần kaki (xu thế th�?i trang mới 2020)', 'Quần kaki luôn là lựa ch�?n tối ưu dành cho các bạn nam để tạo cho mình phong cách th�?i trang trẻ trung nhưng cũng đầy lịch lãm. ', 'Quần kaki luôn là lựa ch�?n tối ưu dành cho các bạn nam để tạo cho mình phong cách th�?i trang trẻ trung nhưng cũng đầy lịch lãm. Quần kaki đến từ Hotdeal được thiết kế với 2 túi trước, 2 túi sau, và có nhi�?u size để bạn thoải mái lựa ch�?n. Quần được may từ chất liệu kaki có độ b�?n cao, không bị co rút sợi vải hay phai màu sau một th�?i gian sử dụng. Dù kết hợp với áo sơ mi hay áo thun thì bạn cũng đ�?u trở nên mạnh mẽ, nam tính hơn trong mắt m�?i ngư�?i.', 2, 'hot17.jpg' FROM dual UNION ALL 
+ SELECT  'áo sơ mi tự tin kheo vẻ lịch lãm', 'Ngày nay, áo sơ mi không còn là đặc quy�?n th�?i trang dành riêng cho nam giới. �?ã có rất nhi�?u những biến thể trong thiết kế và phong cách của áo sơ mi. Cổ áo sơ mi cũng có nhi�?u thay đổi với những đư�?ng cắt và kích thước khác nhau. Nó thay đổi tùy thuộc vào các xu hướng th�?i trang khác nhau. Các loại vải cũng đa dạng hơn rất nhi�?u. Từ vải oxford đến vải cotton.', 'Ngày nay, áo sơ mi không còn là đặc quy�?n th�?i trang dành riêng cho nam giới. �?ã có rất nhi�?u những biến thể trong thiết kế và phong cách của áo sơ mi. Cổ áo sơ mi cũng có nhi�?u thay đổi với những đư�?ng cắt và kích thước khác nhau. Nó thay đổi tùy thuộc vào các xu hướng th�?i trang khác nhau. Các loại vải cũng đa dạng hơn rất nhi�?u. Từ vải oxford đến vải cotton.rnGi�? đây, áo sơ mi đã trở thành 1 trang phục không thể thiếu trong tủ quần áo của m�?i ngư�?i không phân biệt giới tính, tuổi tác. Bạn hoàn toàn có thể tìm cho mình một chiếc áo sơ mi ở bất kì đâu. Từ những nhãn hiệu th�?i trang nổi tiếng đến các cửa hàng nh�?, thậm chí có cả ở trong chợ, trên vỉa hè…rnrnTuy nhiên để có thể sở hữu được một chiếc áo sơ mi vừa vặn, chất liệu tốt nhất với mình, Sơ mi công sở sẽ hướng dẫn bạn những cách ch�?n áo sơ mi nam từ chất liệu, dáng áo phù hợp với bản thân.. Chúc bạn có thể lựa ch�?n được 1 chiếc áo sơ mi chất lượng ưng ý./.', 3, 'aosm1.jpg' FROM dual UNION ALL 
+ SELECT  'thông tin v�? áo tay ngắn của shop mình', 'một trong những thương hiệu th�?i trang nổi tiếng xuất của xứ sở hoa Anh �?ào. Những trung tâm th�?i trang lớn ở Nhật Bản bên trong đ�?u có cửa hàng Beams và thương hiệu này cũng hiện diện ngay cả ở nước ngoài nữa. Thành lập năm 1976, Beams xây dựng hình tượng nhãn hàng th�?i trang – phụ kiện đư�?ng phố thoải mái và chất lượng cao.rnrnrnrn', 'một trong những thương hiệu th�?i trang nổi tiếng xuất của xứ sở hoa Anh �?ào. Những trung tâm th�?i trang lớn ở Nhật Bản bên trong đ�?u có cửa hàng Beams và thương hiệu này cũng hiện diện ngay cả ở nước ngoài nữa. Thành lập năm 1976, Beams xây dựng hình tượng nhãn hàng th�?i trang – phụ kiện đư�?ng phố thoải mái và chất lượng cao.rnrnrnrnCảm hứng th�?i trang chính của Beams nhấn mạnh tính cơ bản nhưng vui là chủ yếu. Rất nhi�?u ngư�?i ch�?n lựa Beams vì mẫu mã đáng yêu và chất lượng thì không chê vào đâu được. Sản phẩm của Beams cực kì đa dạng, cho nam, nữ và trẻ em, chưa kể có những bộ thiết kết đặt may riêng.', 4, 'aothun1.jpg' FROM dual UNION ALL 
+ SELECT  'thông tin đáng bận tâm v�? balo nè', 'Ngày nay khi tìm một chiếc balo du lịch ngư�?i dùng không chỉ quan tâm đến chất lượng sản phẩm mà còn rất chú ý đến mẫu mã và công dụng của chiếc balo đem lại khi sử dụng. �?ể đáp ứng nhu cầu từ phía ngư�?i dùng, nhi�?u hãng sản xuất balo cho ra đ�?i các mẫu balo đa năng với nhi�?u mẫu mã, ', 'Ngày nay khi tìm một chiếc balo du lịch ngư�?i dùng không chỉ quan tâm đến chất lượng sản phẩm mà còn rất chú ý đến mẫu mã và công dụng của chiếc balo đem lại khi sử dụng. �?ể đáp ứng nhu cầu từ phía ngư�?i dùng, nhi�?u hãng sản xuất balo cho ra đ�?i các mẫu balo đa năng với nhi�?u mẫu mã, màu sắc và thiết kế khác nhau giúp khách hàng có nhi�?u lựa ch�?n hơn khi mua hàng. Giới thiệu qua v�? balo đa năng, Balo đa năng là mẫu balo có thể sử dụng cho nhi�?u trư�?ng hợp với nhi�?u tiện ích mang lại khác nhau, có thể sử dụng thông thư�?ng như chiếc balo hoặc thay đổi thành cặp đựng, túi du lịch khi cần. Thông thư�?ng các mẫu balo đa năng được thiết kế với kích thước lớn, đựng được nhi�?u hành lý cần thiết phù hợp sử dụng cho các chuyến công tác hay đi du lịch ngắn ngày. Tại hệ thống cửa hàng của Balo Online có những mẫu balo đa năng đến từ các thương hiệu như Simplecarry, Tucano, Bestlife…với nhi�?u mẫu mã và màu sắc khác nhau, đ�?u được làm từ những chất liệu cao cấp có độ b�?n cao. Tại hệ thống Balo Online các sản phẩm đ�?u được đảm bảo là hàng chính hãng, có giá cả phải chăng và đặc biệt có chế độ bảo hành lên đến 10 năm cho các lỗi v�? khóa, quai đeo và đư�?ng chỉ may. Hệ thống bán hàng uy tín số 1 v�? các kênh online và offline, có chế độ giao hàng nhanh, ship cod toàn quốc, nhi�?u gói ưu đãi với các đơn hàng khác nhau', 5, 'balo4.jpg' FROM dual;
 
 -- SQLINES DEMO *** ---------------------------------------
 
@@ -80,7 +83,7 @@ INSERT INTO tbl_baiviet (baiviet_id, tenbaiviet, tomtat, noidung, danhmuctin_id,
 --
 
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-CREATE TABLE tbl_category (
+CREATE TABLE tbl_category_old (
   category_id number(10) NOT NULL,
   category_name varchar2(50) NOT NULL
 ) ;
@@ -89,12 +92,16 @@ CREATE TABLE tbl_category (
 -- SQLINES DEMO *** liệu cho bảng `tbl_category`
 --
 
-INSERT INTO tbl_category (category_id, category_name)
- SELECT 1, 'Áo Dài' FROM dual UNION ALL 
- SELECT 2, 'Áo Ngắn' FROM dual UNION ALL 
- SELECT 3, 'Quần jean' FROM dual UNION ALL 
- SELECT 4, 'Quần kaki' FROM dual UNION ALL 
- SELECT 5, 'Balo' FROM dual;
+
+INSERT INTO tbl_category_old ( category_id, category_name)
+ SELECT  1,'�?o Dài' FROM dual UNION ALL 
+ SELECT  2,'�?o Ngắn' FROM dual UNION ALL 
+ SELECT  3,'Quần jean' FROM dual UNION ALL 
+ SELECT  4,'Quần kaki' FROM dual UNION ALL 
+ SELECT  5,'Balo' FROM dual;
+ 
+ 
+ INSERT INTO tbl_category(category_name) values ('Qu?n kaki');
 
 -- SQLINES DEMO *** ---------------------------------------
 
@@ -112,12 +119,12 @@ CREATE TABLE tbl_danhmuc_tin (
 -- SQLINES DEMO *** liệu cho bảng `tbl_danhmuc_tin`
 --
 
-INSERT INTO tbl_danhmuc_tin (danhmuctin_id, tendanhmuc)
- SELECT 1, 'giới thiệu về quần jean của shop' FROM dual UNION ALL 
- SELECT 2, 'giới thiệu về quần kaki của shop' FROM dual UNION ALL 
- SELECT 3, 'giới thiệu về áo dài của shop' FROM dual UNION ALL 
- SELECT 4, 'giới thiệu về áo ngắn tay của shop' FROM dual UNION ALL 
- SELECT 5, 'giới thiệu về balo của shop' FROM dual;
+INSERT INTO tbl_danhmuc_tin (tendanhmuc)
+ SELECT  'giới thiệu v�? quần jean của shop' FROM dual UNION ALL 
+ SELECT  'giới thiệu v�? quần kaki của shop' FROM dual UNION ALL 
+ SELECT  'giới thiệu v�? áo dài của shop' FROM dual UNION ALL 
+ SELECT  'giới thiệu v�? áo ngắn tay của shop' FROM dual UNION ALL 
+ SELECT  'giới thiệu v�? balo của shop' FROM dual;
 
 -- SQLINES DEMO *** ---------------------------------------
 
@@ -125,6 +132,12 @@ INSERT INTO tbl_danhmuc_tin (danhmuctin_id, tendanhmuc)
 -- SQLINES DEMO *** g cho bảng `tbl_donhang`
 --
 
+
+
+
+
+
+ALTER SESSION SET TIME_ZONE = '+0:0';
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 CREATE TABLE tbl_donhang (
   donhang_id number(10) NOT NULL,
@@ -132,28 +145,45 @@ CREATE TABLE tbl_donhang (
   soluong number(10) NOT NULL,
   mahang varchar2(50) NOT NULL,
   khachhang_id number(10) NOT NULL,
-  ngaythang timestamp(0) DEFAULT current_timestamp() NOT NULL  (),
+  ngaythang datetime(20) DEFAULT current_timestamp() NOT NULL(),
   tinhtrang trunc(to_number(11)) NOT NULL,
   huydon trunc(to_number(11)) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+); 
+
+engine = innodb default charset = utf8;
+
 
 --
 -- SQLINES DEMO *** liệu cho bảng `tbl_donhang`
 --
 
-INSERT INTO tbl_donhang (donhang_id, sanpham_id, soluong, mahang, khachhang_id, ngaythang, tinhtrang, huydon)
- SELECT 13, 20, 3, '4236', 15, '2019-10-04 02:33:55', 0, 0 FROM dual UNION ALL 
- SELECT 14, 21, 4, '4236', 15, '2019-10-04 02:33:56', 0, 0 FROM dual UNION ALL 
- SELECT 15, 20, 3, '6503', 16, '2019-10-04 02:34:56', 0, 0 FROM dual UNION ALL 
- SELECT 16, 21, 4, '6503', 16, '2019-10-04 02:34:56', 0, 0 FROM dual UNION ALL 
- SELECT 17, 21, 1, '2508', 17, '2019-10-04 02:35:19', 0, 0 FROM dual UNION ALL 
- SELECT 18, 26, 3, '4249', 18, '2019-10-04 02:45:46', 0, 0 FROM dual UNION ALL 
- SELECT 19, 26, 3, '8728', 19, '2019-10-04 02:46:40', 0, 0 FROM dual UNION ALL 
- SELECT 20, 21, 1, '5037', 20, '2019-10-04 02:48:16', 0, 0 FROM dual UNION ALL 
- SELECT 21, 20, 1, '5037', 20, '2019-10-04 02:48:17', 0, 0 FROM dual UNION ALL 
- SELECT 22, 21, 1, '1594', 21, '2019-10-04 02:51:05', 0, 0 FROM dual UNION ALL 
- SELECT 23, 20, 1, '1594', 21, '2019-10-04 02:51:05', 0, 0 FROM dual UNION ALL 
- SELECT 49, 31, 2, '3555', 35, '2020-07-17 08:52:00', 1, 2 FROM dual;
+INSERT INTO tbl_donhang (sanpham_id, soluong, mahang, khachhang_id,  tinhtrang, huydon)
+VALUES (
+   20, 3, '4236', 15,  0, 0 ,
+   21, 4, '4236', 15, 0, 0 ,
+   20, 3, '6503', 16, 0, 0 ,
+   21, 4, '6503', 16,  0, 0,  
+   21, 1, '2508', 17, 0, 0 ,
+   26, 3, '4249', 18, 0, 0 ,
+   26, 3, '8728', 19, 0, 0 ,
+   21, 1, '5037', 20, 0, 0 ,
+   20, 1, '5037', 20, 0, 0 ,
+   21, 1, '1594', 21, 0, 0 ,
+   20, 1, '1594', 21, 0, 0 ,
+   31, 2, '3555', 35, 1, 2 
+)
+ SELECT  20, 3, '4236', 15,  0, 0 FROM dual UNION ALL 
+ SELECT  21, 4, '4236', 15, 0, 0 FROM dual UNION ALL 
+ SELECT 20, 3, '6503', 16, 0, 0 FROM dual UNION ALL 
+ SELECT  21, 4, '6503', 16,  0, 0 FROM dual UNION ALL 
+ SELECT  21, 1, '2508', 17, 0, 0 FROM dual UNION ALL 
+ SELECT  26, 3, '4249', 18, 0, 0 FROM dual UNION ALL 
+ SELECT  26, 3, '8728', 19, 0, 0 FROM dual UNION ALL 
+ SELECT  21, 1, '5037', 20, 0, 0 FROM dual UNION ALL 
+ SELECT  20, 1, '5037', 20, 0, 0 FROM dual UNION ALL 
+ SELECT  21, 1, '1594', 21, 0, 0 FROM dual UNION ALL 
+ SELECT  20, 1, '1594', 21, 0, 0 FROM dual UNION ALL 
+ SELECT  31, 2, '3555', 35, 1, 2 FROM dual;
 
 -- SQLINES DEMO *** ---------------------------------------
 
@@ -167,7 +197,7 @@ CREATE TABLE tbl_giaodich (
   sanpham_id number(10) NOT NULL,
   soluong number(10) NOT NULL,
   magiaodich varchar2(50) NOT NULL,
-  ngaythang timestamp(0) DEFAULT current_timestamp() NOT NULL  (),
+  ngaythang timestamp DEFAULT current_timestamp() NOT NULL  (),
   khachhang_id trunc(to_number(11)) NOT NULL,
   tinhtrangdon trunc(to_number(11)) NOT NULL DEFAULT 0,
   huydon trunc(to_number(11)) NOT NULL DEFAULT 0
@@ -295,22 +325,26 @@ CREATE TABLE tbl_sanpham (
 -- SQLINES DEMO *** liệu cho bảng `tbl_sanpham`
 --
 
-INSERT INTO tbl_sanpham (sanpham_id, category_id, sanpham_name, sanpham_chitiet, sanpham_mota, sanpham_gia, sanpham_giakhuyenmai, sanpham_active, sanpham_hot, sanpham_soluong, sanpham_image)
- SELECT 17, 1, 'áo sơ mi dài collas1', 'áo sơ mi dài collas1 thời thượng quý ông', 'áo sơ mi dài collas1 đen ống mượt', '6000000', '5500000', 0, 0, 19, 'aosm6.jpg' FROM dual UNION ALL 
- SELECT 18, 1, 'áo sơ mi sunsiz', 'áo sơ mi sunsiz cotton 80% , không giặt máy quá mạnh hư áo', 'áo sơ mi sunsiz phá cách tạo đồ', '5000000', '4500000', 0, 0, 9, 'hot1.jpg' FROM dual UNION ALL 
- SELECT 19, 1, 'áo sm khangu', 'áo sm khangu đảng cấp quý ông', 'áo sm khangu tìm lại chính mình', '5600000', '4800000', 0, 0, 78, 'hot2.jpg' FROM dual UNION ALL 
- SELECT 20, 2, 'áo sơ mi stu3', 'áo sơ mi stu3 phù hợp cho các lứa tuổi', 'áo sơ mi stu3 đem đến sự lịch thiệp', '2900000', '1800000', 0, 0, 26, 'aosm3.jpg' FROM dual UNION ALL 
- SELECT 21, 2, 'áo đen fasshing', 'áo đen fasshing may bằng sợi cotton nguyên chất đến 99%', 'áo đen fasshing đem lại cảm giác thời thượng', '1500000', '1200000', 0, 0, 12, 'hot4.jpg' FROM dual UNION ALL 
- SELECT 22, 2, 'áo kuntanggoMM1', 'áo kuntanggoMM1 vải chất liệu cotton thoáng mát cả ngày', 'áo kuntanggoMM1 thoải mái mùa hè', '7500000', '6800000', 0, 0, 10, 'aothun3.jpg' FROM dual UNION ALL 
- SELECT 23, 3, 'quần jean titile goz', 'quần jean titile goz tự tin khoe cá tính', 'quần jean titile goz thêm phần thoải mái', '1150000', '990000', 0, 0, 23, 'quanjean1.jpg' FROM dual UNION ALL 
- SELECT 24, 3, 'quần jean sehon', 'quần jean sehon có kiểu dáng thời thượng , phù hợp với lứa tuỏi 19+', 'quần jean sehon có kiểu dáng thời thượng', '600000', '550000', 0, 0, 14, 'quanjean3.jpg' FROM dual UNION ALL 
- SELECT 25, 3, 'quần jean mabbu2', 'quần jean mabbu2 thời thượng cách tân , mang đạm phong cách cool ngầu', 'quần jean mabbu2 thời thượng cách tân', '660000', '530000', 0, 0, 10, 'quanjean4.jpg' FROM dual UNION ALL 
- SELECT 26, 4, 'quần kaki longsuzz', 'quần kaki longsuzz quá đẹp ', 'quần kaki longsuzz đánh thức tiềm năng trong bạn', '2105000', '1990000', 0, 0, 16, 'quantay3.jpg' FROM dual UNION ALL 
- SELECT 27, 4, 'quần kaki sunnsuized', 'quần kaki sunnsuized được làm từ cotton 90%,chống bụi bẩn và không ra màu', 'quần kaki sunnsuized màu đen óng phù hợp cho mọi lứa tuổi', '3500000', '2300000', 0, 0, 10, 'photomain1.jpg' FROM dual UNION ALL 
- SELECT 28, 4, 'quần kaki jenfull', 'quần kaki jenfull bước đi trên mọi chặn đường', 'quần kaki jenfull', '2000000', '1800000', 0, 0, 15, 'hot21.jpg' FROM dual UNION ALL 
- SELECT 29, 5, 'balo Manking', 'balo Manking có màu hồng cá tính dành cho bạn', 'balo Manking', '630000', '590000', 0, 0, 20, 'balo6.jpg' FROM dual UNION ALL 
- SELECT 30, 5, 'balo kunji', 'ba lô kunji đi đồng hành với bạn các chặn đường có 3 ngăn rộng', 'ba lô kunji đi đồng hành với bạn các chặn đường', '1000000', '800000', 0, 0, 17, 'hot19.jpg' FROM dual UNION ALL 
- SELECT 31, 5, 'ba lô cimima', 'ok', 'ba lô xịn', '500000', '410000', 0, 0, 10, 'balo4.jpg' FROM dual;
+INSERT INTO tbl_sanpham ( category_id, sanpham_name, sanpham_chitiet, sanpham_mota, sanpham_gia, sanpham_giakhuyenmai, sanpham_active, sanpham_hot, sanpham_soluong, sanpham_image)
+ SELECT  17, 'áo sơ mi dài collas1', 'áo sơ mi dài collas1 th�?i thượng quý ông', 'áo sơ mi dài collas1 đen ống mượt', '6000000', '5500000', 0, 0, 19, 'aosm6.jpg' FROM dual UNION ALL 
+ SELECT  17, 'áo sơ mi sunsiz', 'áo sơ mi sunsiz cotton 80% , không giặt máy quá mạnh hư áo', 'áo sơ mi sunsiz phá cách tạo đồ', '5000000', '4500000', 0, 0, 9, 'hot1.jpg' FROM dual UNION ALL 
+ SELECT  17, 'áo sm khangu', 'áo sm khangu đảng cấp quý ông', 'áo sm khangu tìm lại chính mình', '5600000', '4800000', 0, 0, 78, 'hot2.jpg' FROM dual UNION ALL 
+ SELECT  18, 'áo sơ mi stu3', 'áo sơ mi stu3 phù hợp cho các lứa tuổi', 'áo sơ mi stu3 đem đến sự lịch thiệp', '2900000', '1800000', 0, 0, 26, 'aosm3.jpg' FROM dual UNION ALL 
+ SELECT  18, 'áo đen fasshing', 'áo đen fasshing may bằng sợi cotton nguyên chất đến 99%', 'áo đen fasshing đem lại cảm giác th�?i thượng', '1500000', '1200000', 0, 0, 12, 'hot4.jpg' FROM dual UNION ALL 
+ SELECT  18, 'áo kuntanggoMM1', 'áo kuntanggoMM1 vải chất liệu cotton thoáng mát cả ngày', 'áo kuntanggoMM1 thoải mái mùa hè', '7500000', '6800000', 0, 0, 10, 'aothun3.jpg' FROM dual UNION ALL 
+ SELECT  19, 'quần jean titile goz', 'quần jean titile goz tự tin khoe cá tính', 'quần jean titile goz thêm phần thoải mái', '1150000', '990000', 0, 0, 23, 'quanjean1.jpg' FROM dual UNION ALL 
+ SELECT  19, 'quần jean sehon', 'quần jean sehon có kiểu dáng th�?i thượng , phù hợp với lứa tu�?i 19+', 'quần jean sehon có kiểu dáng th�?i thượng', '600000', '550000', 0, 0, 14, 'quanjean3.jpg' FROM dual UNION ALL 
+ SELECT  19, 'quần jean mabbu2', 'quần jean mabbu2 th�?i thượng cách tân , mang đạm phong cách cool ngầu', 'quần jean mabbu2 th�?i thượng cách tân', '660000', '530000', 0, 0, 10, 'quanjean4.jpg' FROM dual UNION ALL 
+ SELECT  20, 'quần kaki longsuzz', 'quần kaki longsuzz quá đẹp ', 'quần kaki longsuzz đánh thức ti�?m năng trong bạn', '2105000', '1990000', 0, 0, 16, 'quantay3.jpg' FROM dual UNION ALL 
+ SELECT  20, 'quần kaki sunnsuized', 'quần kaki sunnsuized được làm từ cotton 90%,chống bụi bẩn và không ra màu', 'quần kaki sunnsuized màu đen óng phù hợp cho m�?i lứa tuổi', '3500000', '2300000', 0, 0, 10, 'photomain1.jpg' FROM dual UNION ALL 
+ SELECT  20, 'quần kaki jenfull', 'quần kaki jenfull bước đi trên m�?i chặn đư�?ng', 'quần kaki jenfull', '2000000', '1800000', 0, 0, 15, 'hot21.jpg' FROM dual UNION ALL 
+ SELECT  21, 'balo Manking', 'balo Manking có màu hồng cá tính dành cho bạn', 'balo Manking', '630000', '590000', 0, 0, 20, 'balo6.jpg' FROM dual UNION ALL 
+ SELECT  21, 'balo kunji', 'ba lô kunji đi đồng hành với bạn các chặn đư�?ng có 3 ngăn rộng', 'ba lô kunji đi đồng hành với bạn các chặn đư�?ng', '1000000', '800000', 0, 0, 17, 'hot19.jpg' FROM dual UNION ALL 
+ SELECT  21, 'ba lô cimima', 'ok', 'ba lô xịn', '500000', '410000', 0, 0, 10, 'balo4.jpg' FROM dual;
+
+
+INSERT INTO tbl_sanpham ( category_id, sanpham_name, sanpham_chitiet, sanpham_mota, sanpham_gia, sanpham_giakhuyenmai, sanpham_active, sanpham_hot, sanpham_soluong, sanpham_image)
+VALUES ( 17, 'áo sơ mi sunsiz', 'áo sơ mi sunsiz cotton 80% , không giặt máy quá mạnh hư áo', 'áo sơ mi sunsiz phá cách tạo đồ', '5000000', '4500000', 0, 0, 9, 'hot1.jpg')
 
 -- SQLINES DEMO *** ---------------------------------------
 
@@ -417,7 +451,7 @@ ALTER TABLE tbl_baiviet
 --
 -- SQLINES DEMO *** o bảng `tbl_category`
 --
-ALTER TABLE tbl_category
+ALTER TABLE tbl_category_old
   MODIFY category_id trunc(to_number(11)) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --

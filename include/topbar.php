@@ -1,45 +1,69 @@
 <?php
-	// session_destroy();
-	// unset('dangnhap');
-	if(isset($_POST['dangnhap_home'])) {
-		$taikhoan = $_POST['email_login'];
-		$matkhau = md5($_POST['password_login']);
-		if($taikhoan=='' || $matkhau ==''){
-			echo '<script>alert("Vui lòng điền tài khoản hoặc mật khẩu")</script>';
-		}else{
-			$sql_select_admin = oci_parse($con,"SELECT * FROM SYS.tbl_khachhang WHERE email='$taikhoan' AND password='$matkhau' ");
-			// echo $sql_select_admin;
-			oci_execute($sql_select_admin);
-			$count = oci_num_rows($sql_select_admin);
-			$row_dangnhap = oci_fetch_array($sql_select_admin);
-			if($count>0){
-				$_SESSION['dangnhap_home'] = $row_dangnhap['NAME'];
-				$_SESSION['khachhang_id'] = $row_dangnhap['KHACHHANG_ID'];
+    // session_destroy();
+    // unset('dangnhap');
+        if (isset($_POST['dangnhap_home'])) {
+            $taikhoan = $_POST['email_login'];
+            $matkhau = md5($_POST['password_login']);
+
+            if ($taikhoan == '' || $matkhau == '') {
+                echo '<script>alert("Vui lòng điền tài khoản hoặc mật khẩu")</script>';
+            } else {
+                $sql_select_admin = oci_parse($con, "SELECT * FROM tbl_khachhang WHERE email='$taikhoan' AND password='$matkhau' ORDER BY email");
+                // echo $sql_select_admin;
+                oci_execute($sql_select_admin);
+                $row_dangnhap = oci_fetch_array($sql_select_admin);
+                $count = oci_num_rows($sql_select_admin);
+                if ($count > 0) {
+                    $_SESSION['dangnhap_home'] = $row_dangnhap['NAME'];
+                    $_SESSION['khachhang_id'] = $row_dangnhap['KHACHHANG_ID'];
+
+                    header('Location: index.php?quanly=giohang');
+                } else {
+                    echo '<script>alert("Tài khoản hoặc mật khẩu sai")</script>';
+                }
+            }
+        } elseif (isset($_POST['dangky'])) {
+            $email = $_POST['email'];
+            $password = md5($_POST['password']);
+            $note = $_POST['note'];
+            $address = $_POST['address'];
+            $giaohang = $_POST['giaohang'];
+            $name = $_POST['name'];
+            $phone = $_POST['phone'];
+            //check valid email
+            $sql_checkemail = oci_parse($con, "SELECT email FROM tbl_khachhang WHERE email = '$email'");
+            oci_execute($sql_checkemail);
+            $row_dangky = oci_fetch_array($sql_checkemail);
+            $count = oci_num_rows($sql_checkemail);
+
+            if ($count > 0) {
+                echo '<script>alert("Email đã được sử dụng")</script>';
+            } else {
 				
-				header('Location: index.php?quanly=giohang');
-			}else{
-				echo '<script>alert("Tài khoản mật khẩu sai")</script>';
-			}
+                $sql_khachhang = oci_parse($con, "INSERT INTO tbl_khachhang(name,phone,address,note,email,password,giaohang) values ('$name','$phone','$address','$note','$email','$password','$giaohang')");
+                oci_execute($sql_khachhang);
+
+
+				$sql_select_khachhang = oci_parse($con, "SELECT name,khachhang_id FROM tbl_khachhang WHERE email = '$email'");
+                // echo $sql_select_admin;
+                oci_execute($sql_select_khachhang);
+                $row_dangky = oci_fetch_array($sql_select_khachhang);
+                $count1 = oci_num_rows($sql_select_khachhang);
+                if ($count1 > 0) {
+                    $_SESSION['dangnhap_home'] = $row_dangky['NAME'];
+                    $_SESSION['khachhang_id'] = $row_dangky['KHACHHANG_ID'];
+
+                    header('Location: index.php?quanly=giohang');
+            }
 		}
-	}elseif(isset($_POST['dangky'])){
-		$name = $_POST['name'];
-	 	$phone = $_POST['phone'];
-	 	$email = $_POST['email'];
-	 	$password = md5($_POST['password']);
-	 	$note = $_POST['note'];
-	 	$address = $_POST['address'];
-	 	$giaohang = $_POST['giaohang'];
- 
- 		$sql_khachhang = oci_parse($con,"INSERT INTO SYS.tbl_khachhang(khachhang_id,name,phone,email,address,note,giaohang,password) values (sequenkhachhang.nextval,'$name','$phone','$email','$address','$note','$giaohang','$password')");
- 		oci_execute($sql_khachhang);
-		 $sql_select_khachhang = oci_parse($con,"SELECT * FROM SYS.tbl_khachhang ORDER BY khachhang_id DESC LIMIT 1");
-		 oci_execute($sql_select_khachhang);
- 		$row_khachhang = oci_fetch_array($sql_select_khachhang);
- 		$_SESSION['dangnhap_home'] = $name;
-		$_SESSION['khachhang_id'] = $row_khachhang['KHACHHANG_ID'];
-		
- 		header('Location:index.php?quanly=giohang');
-	}
+        } if (isset($_GET['dangxuat'])) {
+            $id = $_GET['dangxuat'];
+            if ($id == 1) {
+                unset($_SESSION['dangnhap_home']);
+                header('Refesh:1; url = index.php');
+            }
+        }
+
 ?> 
 
 <!-- top-header -->
@@ -49,23 +73,15 @@
 				<div class="col-lg-4 header-most-top">
 					
 				</div>
+				<?php
+                        if (!isset($_SESSION['dangnhap_home'])) {
+                            ?>
 				<div class="col-lg-8 header-right mt-lg-0 mt-2">
 					<!-- header lists -->
 					<ul>
 
-						<?php
-						if(isset($_SESSION['dangnhap_home'])){ 
-						
-						?>
 						<li class="text-center border-right text-white">
-							<a href="index.php?quanly=xemdonhang&khachhang=<?php echo $_SESSION['khachhang_id'] ?>" class="text-white">
-								<i class="fas fa-truck mr-2"></i>Xem đơn hàng : <?php echo $_SESSION['dangnhap_home'] ?></a>
-						</li>
-						<?php
-					}
-						?>
-						<li class="text-center border-right text-white">
-							<i class="fas fa-phone mr-2"></i>  028 3868 4857
+							<i class="fas fa-phone mr-2"></i>  012 3456 7890
 						</li>
 						<li class="text-center border-right text-white">
 							<a href="#" data-toggle="modal" data-target="#dangnhap" class="text-white">
@@ -78,6 +94,26 @@
 					</ul>
 					<!-- //header lists -->
 				</div>
+				<?php
+                        }
+                ?>
+
+				<?php
+                        if (isset($_SESSION['dangnhap_home'])) {
+                            ?>
+				
+					<ul class="text-center border-right text-white" >
+						<a href="index.php?quanly=xemdonhang&khachhang=<?php echo $_SESSION['khachhang_id']; ?>" class="text-white">
+							<i class="fas fa-truck mr-2"></i>Xem đơn hàng : <?php echo $_SESSION['dangnhap_home']; ?></a>
+					</ul>	
+					<ul><p>     </p></ul>
+					<ul class="text-center text-white">
+						<a href="index.php?quanly=giohang&dangxuat=1"># Đăng xuất</a>
+					</ul>	
+					
+				<?php
+                        }
+                ?>
 			</div>
 		</div>
 	</div>
@@ -93,7 +129,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form action="#" method="post">
+					<form action="#" method="POST">
 						<div class="form-group">
 							<label class="col-form-label">Email</label>
 							<input type="text" class="form-control" placeholder=" " name="email_login" required="">
@@ -127,9 +163,9 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form action="" method="post">
+					<form action="#" method="POST">
 						<div class="form-group">
-							<label class="col-form-label">Tên khách hàng</label>
+							<label class="col-form-label">Họ tên</label>
 							<input type="text" class="form-control" placeholder=" " name="name" required="">
 						</div>
 						<div class="form-group">
@@ -165,8 +201,8 @@
 	</div>
 	<!-- //modal -->
 	<!-- //top-header -->
-	
-	
+
+
 	<!-- header-bottom-->
 	<div class="header-bot">
 		<div class="container">

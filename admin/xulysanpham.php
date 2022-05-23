@@ -1,54 +1,53 @@
 <?php
-	include('../db/connect.php');
+    include '../db/connect.php';
 ?>
 <?php
-	if(isset($_POST['themsanpham'])){
-		$tensanpham = $_POST['tensanpham'];
-		$hinhanh = $_FILES['hinhanh']['name'];
-		
-		$soluong = $_POST['soluong'];
-		$gia = $_POST['giasanpham'];
-		$giakhuyenmai = $_POST['giakhuyenmai'];
-		$danhmuc = $_POST['danhmuc'];
-		$chitiet = $_POST['chitiet'];
-		$mota = $_POST['mota'];
-		$path = '../uploads/';
-		
-		$hinhanh_tmp = $_FILES['hinhanh']['tmp_name'];
-		$sql_insert_product = oci_parse($con,"INSERT INTO tbl_sanpham(sanpham_id,SANPHAM_ACTIVE,sanpham_hot,sanpham_name,sanpham_chitiet,sanpham_mota,sanpham_gia,sanpham_giakhuyenmai,sanpham_soluong,sanpham_image,category_id) values (sequensanpham.nextval,'0','0','$tensanpham','$chitiet','$mota','$gia','$giakhuyenmai','$soluong','$hinhanh','$danhmuc')");
-		oci_execute($sql_insert_product);
-		move_uploaded_file($hinhanh_tmp,$path.$hinhanh);
-	}elseif(isset($_POST['capnhatsanpham'])) {
-		$id_update = $_POST['id_update'];
-		echo $id_update;
-		$tensanpham = $_POST['tensanpham'];
-		$hinhanh = $_FILES['hinhanh']['name'];
-		$hinhanh_tmp = $_FILES['hinhanh']['tmp_name'];
-		$soluong = $_POST['soluong'];
-		$gia = $_POST['giasanpham'];
-		$giakhuyenmai = $_POST['giakhuyenmai'];
-		$danhmuc = $_POST['danhmuc'];
-		$chitiet = $_POST['chitiet'];
-		$mota = $_POST['mota'];
-		$path = '../uploads/';
-		if($hinhanh==''){
-			$sql_update_image = "UPDATE tbl_sanpham SET sanpham_name='$tensanpham',sanpham_chitiet='$chitiet',sanpham_mota='$mota',sanpham_gia='$gia',sanpham_giakhuyenmai='$giakhuyenmai',sanpham_soluong='$soluong',category_id='$danhmuc' WHERE sanpham_id='$id_update'";
-			
-		}else{
-			move_uploaded_file($hinhanh_tmp,$path.$hinhanh);
-			$sql_update_image = "UPDATE tbl_sanpham SET sanpham_name='$tensanpham',sanpham_chitiet='$chitiet',sanpham_mota='$mota',sanpham_gia='$gia',sanpham_giakhuyenmai='$giakhuyenmai',sanpham_soluong='$soluong',sanpham_image='$hinhanh',category_id='$danhmuc' WHERE sanpham_id='$id_update'";
-		}
-		$img1=oci_parse($con,$sql_update_image);
-		oci_execute($img1);
-	}
-	
+    if (isset($_POST['themsanpham'])) {
+        $tensanpham = $_POST['tensanpham'];
+        $hinhanh = $_FILES['hinhanh']['name'];
+
+        $soluong = $_POST['soluong'];
+        $gia = $_POST['giasanpham'];
+        $giakhuyenmai = $_POST['giakhuyenmai'];
+        $danhmuc = $_POST['danhmuc'];
+        $chitiet = $_POST['chitiet'];
+        $mota = $_POST['mota'];
+        $path = '../uploads/';
+
+        $hinhanh_tmp = $_FILES['hinhanh']['tmp_name'];
+        $sql_insert_product = oci_parse($con, "INSERT INTO tbl_sanpham(sanpham_id,SANPHAM_ACTIVE,sanpham_hot,sanpham_name,sanpham_chitiet,sanpham_mota,sanpham_gia,sanpham_giakhuyenmai,sanpham_soluong,sanpham_image,category_id) values (sequensanpham.nextval,'0','0','$tensanpham','$chitiet','$mota','$gia','$giakhuyenmai','$soluong','$hinhanh','$danhmuc')");
+        oci_execute($sql_insert_product);
+        move_uploaded_file($hinhanh_tmp, $path.$hinhanh);
+    } elseif (isset($_POST['capnhatsanpham'])) {
+        $id_update = $_POST['id_update'];
+        echo $id_update;
+        $tensanpham = $_POST['tensanpham'];
+        $hinhanh = $_FILES['hinhanh']['name'];
+        $hinhanh_tmp = $_FILES['hinhanh']['tmp_name'];
+        $soluong = $_POST['soluong'];
+        $gia = $_POST['giasanpham'];
+        $giakhuyenmai = $_POST['giakhuyenmai'];
+        $danhmuc = $_POST['danhmuc'];
+        $chitiet = $_POST['chitiet'];
+        $mota = $_POST['mota'];
+        $path = '../uploads/';
+        if ($hinhanh == '') {
+            $sql_update_image = "UPDATE tbl_sanpham SET sanpham_name='$tensanpham',sanpham_chitiet='$chitiet',sanpham_mota='$mota',sanpham_gia='$gia',sanpham_giakhuyenmai='$giakhuyenmai',sanpham_soluong='$soluong',category_id='$danhmuc' WHERE sanpham_id='$id_update'";
+        } else {
+            move_uploaded_file($hinhanh_tmp, $path.$hinhanh);
+            $sql_update_image = "UPDATE tbl_sanpham SET sanpham_name='$tensanpham',sanpham_chitiet='$chitiet',sanpham_mota='$mota',sanpham_gia='$gia',sanpham_giakhuyenmai='$giakhuyenmai',sanpham_soluong='$soluong',sanpham_image='$hinhanh',category_id='$danhmuc' WHERE sanpham_id='$id_update'";
+        }
+        $img1 = oci_parse($con, $sql_update_image);
+        oci_execute($img1);
+    }
+
 ?> 
 <?php
-	if(isset($_GET['xoa'])){
-		$id= $_GET['xoa'];
-		$sql_xoa = oci_parse($con,"DELETE FROM tbl_sanpham WHERE sanpham_id='$id'");
-		oci_execute($sql_xoa);
-	} 
+    if (isset($_GET['xoa'])) {
+        $id = $_GET['xoa'];
+        $sql_xoa = oci_parse($con, "DELETE FROM tbl_sanpham WHERE sanpham_id='$id'");
+        oci_execute($sql_xoa);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -86,60 +85,57 @@
 	<div class="container">
 		<div class="row">
 		<?php
-			if(isset($_GET['quanly'])=='capnhat'){
-				$id_capnhat = $_GET['capnhat_id'];
-				$sql_capnhat = oci_parse($con,"SELECT * FROM tbl_sanpham WHERE sanpham_id='$id_capnhat'");
-				oci_execute($sql_capnhat);
-				$row_capnhat = oci_fetch_array($sql_capnhat);
-				$id_category_1 = $row_capnhat['CATEGORY_ID'];
-				?>
+            if (isset($_GET['quanly']) == 'capnhat') {
+                $id_capnhat = $_GET['capnhat_id'];
+                $sql_capnhat = oci_parse($con, "SELECT * FROM tbl_sanpham WHERE sanpham_id='$id_capnhat'");
+                oci_execute($sql_capnhat);
+                $row_capnhat = oci_fetch_array($sql_capnhat);
+                $id_category_1 = $row_capnhat['CATEGORY_ID']; ?>
 				<div class="col-md-4">
 				<h4>Cập nhật sản phẩm</h4>
 				
 				<form action="" method="POST" enctype="multipart/form-data">
 					<label>Tên sản phẩm</label>
-					<input type="text" class="form-control" name="tensanpham" value="<?php echo $row_capnhat['SANPHAM_NAME'] ?>"><br>
-					<input type="hidden" class="form-control" name="id_update" value="<?php echo $row_capnhat['SANPHAM_ID'] ?>">
+					<input type="text" class="form-control" name="tensanpham" value="<?php echo $row_capnhat['SANPHAM_NAME']; ?>"><br>
+					<input type="hidden" class="form-control" name="id_update" value="<?php echo $row_capnhat['SANPHAM_ID']; ?>">
 					<label>Hình ảnh</label>
 					<input type="file" class="form-control" name="hinhanh"><br>
-					<img src="../uploads/<?php echo $row_capnhat['SANPHAM_IMAGE'] ?>" height="80" width="80"><br>
+					<img src="../uploads/<?php echo $row_capnhat['SANPHAM_IMAGE']; ?>" height="80" width="80"><br>
 					<label>Giá</label>
-					<input type="text" class="form-control" name="giasanpham" value="<?php echo $row_capnhat['SANPHAM_GIA'] ?>"><br>
+					<input type="text" class="form-control" name="giasanpham" value="<?php echo $row_capnhat['SANPHAM_GIA']; ?>"><br>
 					<label>Giá khuyến mãi</label>
-					<input type="text" class="form-control" name="giakhuyenmai" value="<?php echo $row_capnhat['SANPHAM_GIAKHUYENMAI'] ?>"><br>
+					<input type="text" class="form-control" name="giakhuyenmai" value="<?php echo $row_capnhat['SANPHAM_GIAKHUYENMAI']; ?>"><br>
 					<label>Số lượng</label>
-					<input type="text" class="form-control" name="soluong" value="<?php echo $row_capnhat['SANPHAM_SOLUONG'] ?>"><br>
+					<input type="text" class="form-control" name="soluong" value="<?php echo $row_capnhat['SANPHAM_SOLUONG']; ?>"><br>
 					<label>Mô tả</label>
-					<textarea class="form-control" rows="10" name="mota"><?php echo $row_capnhat['SANPHAM_MOTA'] ?></textarea><br>
+					<textarea class="form-control" rows="10" name="mota"><?php echo $row_capnhat['SANPHAM_MOTA']; ?></textarea><br>
 					<label>Chi tiết</label>
-					<textarea class="form-control" rows="10" name="chitiet"><?php echo $row_capnhat['SANPHAM_CHITIET'] ?></textarea><br>
+					<textarea class="form-control" rows="10" name="chitiet"><?php echo $row_capnhat['SANPHAM_CHITIET']; ?></textarea><br>
 					<label>Danh mục</label>
 					<?php
-					$sql_danhmuc = oci_parse($con,"SELECT * FROM tbl_category ORDER BY category_id DESC"); 
-					oci_execute($sql_danhmuc);
-					?>
+                    $sql_danhmuc = oci_parse($con, 'SELECT * FROM tbl_category ORDER BY category_id DESC');
+                oci_execute($sql_danhmuc); ?>
 					<select name="danhmuc" class="form-control">
 						<option value="0">-----Chọn danh mục-----</option>
 						<?php
-						while($row_danhmuc = oci_fetch_array($sql_danhmuc)){
-							if($id_category_1==$row_danhmuc['CATEGORY_ID']){
-						?>
-						<option selected value="<?php echo $row_danhmuc['CATEGORY_ID'] ?>"><?php echo $row_danhmuc['CATEGORY_NAME'] ?></option>
-						<?php 
-							}else{
-						?>
-						<option value="<?php echo $row_danhmuc['CATEGORY_ID'] ?>"><?php echo $row_danhmuc['CATEGORY_NAME'] ?></option>
+                        while ($row_danhmuc = oci_fetch_array($sql_danhmuc)) {
+                            if ($id_category_1 == $row_danhmuc['CATEGORY_ID']) {
+                                ?>
+						<option selected value="<?php echo $row_danhmuc['CATEGORY_ID']; ?>"><?php echo $row_danhmuc['CATEGORY_NAME']; ?></option>
 						<?php
-							}
-						}
-						?>
+                            } else {
+                                ?>
+						<option value="<?php echo $row_danhmuc['CATEGORY_ID']; ?>"><?php echo $row_danhmuc['CATEGORY_NAME']; ?></option>
+						<?php
+                            }
+                        } ?>
 					</select><br>
 					<input type="submit" name="capnhatsanpham" value="Cập nhật sản phẩm" class="btn btn-default">
 				</form>
 				</div>
 			<?php
-			}else{
-				?> 
+            } else {
+                ?> 
 				<div class="col-md-4">
 				<h4>Thêm sản phẩm</h4>
 				
@@ -160,32 +156,30 @@
 					<textarea class="form-control" name="chitiet"></textarea><br>
 					<label>Danh mục</label>
 					<?php
-					$sql_danhmuc = oci_parse($con,"SELECT * FROM tbl_category ORDER BY category_id DESC"); 
-					oci_execute($sql_danhmuc);
-					?>
+                    $sql_danhmuc = oci_parse($con, 'SELECT * FROM tbl_category ORDER BY category_id DESC');
+                oci_execute($sql_danhmuc); ?>
 					<select name="danhmuc" class="form-control">
 						<option value="0">-----Chọn danh mục-----</option>
 						<?php
-						while($row_danhmuc = oci_fetch_array($sql_danhmuc)){
-						?>
-						<option value="<?php echo $row_danhmuc['CATEGORY_ID'] ?>"><?php echo $row_danhmuc['CATEGORY_NAME'] ?></option>
-						<?php 
-						}
-						?>
+                        while ($row_danhmuc = oci_fetch_array($sql_danhmuc)) {
+                            ?>
+						<option value="<?php echo $row_danhmuc['CATEGORY_ID']; ?>"><?php echo $row_danhmuc['CATEGORY_NAME']; ?></option>
+						<?php
+                        } ?>
 					</select><br>
 					<input type="submit" name="themsanpham" value="Thêm sản phẩm" class="btn btn-default">
 				</form>
 				</div>
 				<?php
-			} 
-			
-				?>
+            }
+
+                ?>
 			<div class="col-md-8">
 				<h4>Liệt kê sản phẩm</h4>
 				<?php
-				$sql_select_sp = oci_parse($con,"SELECT * FROM tbl_sanpham,tbl_category WHERE tbl_sanpham.category_id=tbl_category.category_id ORDER BY tbl_sanpham.sanpham_id DESC"); 
-				oci_execute($sql_select_sp);
-				?> 
+                $sql_select_sp = oci_parse($con, 'SELECT * FROM tbl_sanpham, tbl_category WHERE tbl_sanpham.category_id=tbl_category.category_id ORDER BY tbl_sanpham.sanpham_id DESC');
+                oci_execute($sql_select_sp);
+                ?> 
 				<table class="table table-bordered ">
 					<tr>
 						<th>Thứ tự</th>
@@ -198,23 +192,22 @@
 						<th>Quản lý</th>
 					</tr>
 					<?php
-					$i = 0;
-					while($row_sp = oci_fetch_array($sql_select_sp)){ 
-						$i++;
-					?> 
+                    $i = 0;
+                    while ($row_sp = oci_fetch_array($sql_select_sp)) {
+                        ++$i; ?> 
 					<tr>
-						<td><?php echo $i ?></td>
-						<td><?php echo $row_sp['SANPHAM_NAME'] ?></td>
-						<td><img src="../uploads/<?php echo $row_sp['SANPHAM_IMAGE'] ?>" height="100" width="80"></td>
-						<td><?php echo $row_sp['SANPHAM_SOLUONG'] ?></td>
-						<td><?php echo $row_sp['CATEGORY_NAME'] ?></td>
-						<td><?php echo number_format($row_sp['SANPHAM_GIA']).'vnđ' ?></td>
-						<td><?php echo number_format($row_sp['SANPHAM_GIAKHUYENMAI']).'vnđ' ?></td>
-						<td><a href="?xoa=<?php echo $row_sp['SANPHAM_ID'] ?>">Xóa</a> || <a href="xulysanpham.php?quanly=capnhat&capnhat_id=<?php echo $row_sp['SANPHAM_ID'] ?>">Cập nhật</a></td>
+						<td><?php echo $i; ?></td>
+						<td><?php echo $row_sp['SANPHAM_NAME']; ?></td>
+						<td><img src="../uploads/<?php echo $row_sp['SANPHAM_IMAGE']; ?>" height="100" width="80"></td>
+						<td><?php echo $row_sp['SANPHAM_SOLUONG']; ?></td>
+						<td><?php echo $row_sp['CATEGORY_NAME']; ?></td>
+						<td><?php echo number_format($row_sp['SANPHAM_GIA']).'vnđ'; ?></td>
+						<td><?php echo number_format($row_sp['SANPHAM_GIAKHUYENMAI']).'vnđ'; ?></td>
+						<td><a href="?xoa=<?php echo $row_sp['SANPHAM_ID']; ?>">Xóa</a> || <a href="xulysanpham.php?quanly=capnhat&capnhat_id=<?php echo $row_sp['SANPHAM_ID']; ?>">Cập nhật</a></td>
 					</tr>
 				<?php
-					} 
-					?> 
+                    }
+                    ?> 
 				</table>
 			</div>
 		</div>

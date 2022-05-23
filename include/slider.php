@@ -5,7 +5,7 @@
 			<?php
             // $sql_slider = mysqli_query($con,"SELECT * FROM tbl_slider WHERE slider_active='1' ORDER BY slider_id");
             // while($row_slider = mysqli_fetch_array($sql_slider)){
-                $sql_slider = oci_parse($con, "SELECT * FROM SYS.tbl_slider WHERE slider_active='1' ORDER BY slider_id");
+                $sql_slider = oci_parse($con, "SELECT * FROM tbl_slider WHERE slider_active='1' ORDER BY slider_id");
                 oci_execute($sql_slider);
             while ($row_slider = oci_fetch_array($sql_slider)) {
                 ?>

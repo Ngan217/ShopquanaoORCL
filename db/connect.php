@@ -20,7 +20,7 @@ if(!$con){
 */
 // else echo"connect scussed";
 
-$con = oci_connect('NGAN', 'ngan', '192.168.1.9/SHOPQUANAO');
+$con = oci_connect('NGAN217', 'ngan', 'localhost/ORCLShop');
 //check
 if (!$con) {
     echo 'failer to connect oracle'.oci_error($con);
