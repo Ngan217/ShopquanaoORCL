@@ -69,7 +69,7 @@
 								<fieldset>
 									<input type="hidden" name="tensanpham" value="<?php echo $row_chitiet['SANPHAM_NAME']; ?>" />
 									<input type="hidden" name="sanpham_id" value="<?php echo $row_chitiet['SANPHAM_ID']; ?>" />
-									<input type="hidden" name="giasanpham" value="<?php echo $row_chitiet['SANPHAM_GIA']; ?>" />
+									<input type="hidden" name="giasanpham" value="<?php echo $row_chitiet['SANPHAM_GIAKHUYENMAI']; ?>" />
 									<input type="hidden" name="hinhanh" value="<?php echo $row_chitiet['SANPHAM_IMAGE']; ?>" />
 									<input type="hidden" name="soluong" value="1" />			
 									<input type="submit" name="themgiohang" value="Thêm vào giỏ hàng" class="button" />

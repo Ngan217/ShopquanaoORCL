@@ -10,6 +10,7 @@
             } else {
                 $sql_select_admin = oci_parse($con, "SELECT * FROM tbl_khachhang WHERE email='$taikhoan' AND password='$matkhau' ORDER BY email");
                 // echo $sql_select_admin;
+				unset($_GET['dangxuat']);
                 oci_execute($sql_select_admin);
                 $row_dangnhap = oci_fetch_array($sql_select_admin);
                 $count = oci_num_rows($sql_select_admin);
@@ -23,6 +24,7 @@
                 }
             }
         } elseif (isset($_POST['dangky'])) {
+			unset($_GET['dangxuat']);
             $email = $_POST['email'];
             $password = md5($_POST['password']);
             $note = $_POST['note'];
@@ -39,12 +41,10 @@
             if ($count > 0) {
                 echo '<script>alert("Email đã được sử dụng")</script>';
             } else {
-				
-                $sql_khachhang = oci_parse($con, "INSERT INTO tbl_khachhang(name,phone,address,note,email,password,giaohang) values ('$name','$phone','$address','$note','$email','$password','$giaohang')");
+                $sql_khachhang = oci_parse($con, "INSERT INTO tbl_khachhang(name,phone,address,note,email,password,sodonhang) values ('$name','$phone','$address','$note','$email','$password','$giaohang')");
                 oci_execute($sql_khachhang);
 
-
-				$sql_select_khachhang = oci_parse($con, "SELECT name,khachhang_id FROM tbl_khachhang WHERE email = '$email'");
+                $sql_select_khachhang = oci_parse($con, "SELECT name,khachhang_id FROM tbl_khachhang WHERE email = '$email'");
                 // echo $sql_select_admin;
                 oci_execute($sql_select_khachhang);
                 $row_dangky = oci_fetch_array($sql_select_khachhang);
@@ -54,8 +54,8 @@
                     $_SESSION['khachhang_id'] = $row_dangky['KHACHHANG_ID'];
 
                     header('Location: index.php?quanly=giohang');
+                }
             }
-		}
         } if (isset($_GET['dangxuat'])) {
             $id = $_GET['dangxuat'];
             if ($id == 1) {

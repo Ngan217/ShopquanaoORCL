@@ -6,10 +6,11 @@
         $huydon = '';
         $magiaodich = '';
     }
+    /*
     $sql_update_donhang = oci_parse($con, "UPDATE tbl_donhang SET huydon='$huydon' WHERE mahang='$magiaodich'");
     oci_execute($sql_update_donhang);
     $sql_update_giaodich = oci_parse($con, "UPDATE tbl_giaodich SET huydon='$huydon' WHERE magiaodich='$magiaodich'");
-    oci_execute($sql_update_giaodich);
+    oci_execute($sql_update_giaodich);*/
 ?>
 <!-- top Products -->
 	<div class="ads-grid py-sm-5 py-4">
@@ -26,7 +27,7 @@
 							<div class="row">
 								<?php
                                 if (isset($_SESSION['dangnhap_home'])) {
-                                    echo 'Đơn hàng : '.$_SESSION['dangnhap_home'];
+                                    echo 'Khách hàng : '.$_SESSION['dangnhap_home'];
                                 }
                                 ?>
 							<div class="col-md-12">
@@ -37,18 +38,19 @@
                                 } else {
                                     $id_khachhang = '';
                                 }
-                                $sql_select = oci_parse($con, "SELECT * FROM tbl_giaodich WHERE tbl_giaodich.khachhang_id='$id_khachhang' /*GROUP BY tbl_giaodich.magiaodich*/");
+                                $sql_select = oci_parse($con, "SELECT * FROM TBL_DONHANG WHERE KHACHHANG_ID='$id_khachhang'");
                                 oci_execute($sql_select);
                                 ?> 
-								<table class="table table-bordered ">
+								<table class="table table-bordered " style="width:100%;">
 									<tr>
 										<th>Thứ tự</th>
-										<th>Mã giao dịch</th>
-									
-										<th>Ngày đặt</th>
-										<th>Quản lý</th>
-										<th>Tình trạng</th>
-										<th>Yêu cầu</th>
+										<th>Mã đơn hàng</th>
+										<th>Ngày đặt hàng</th>
+										<th>Tổng tiền</th>
+										<th>Tình trạng đơn hàng</th>
+										<th>Chi tiết đơn hàng</th>
+										<th>Hủy đơn</th>
+										
 									</tr>
 									<?php
                                     $i = 0;
@@ -57,29 +59,28 @@
 									<tr>
 										<td><?php echo $i; ?></td>
 										
-										<td><?php echo $row_donhang['MAGIAODICH']; ?></td>
+										<td><?php echo $row_donhang['DONHANG_ID']; ?></td>
 									
 										
-										<td><?php echo $row_donhang['NGAYTHANG']; ?></td>
-										<td><a href="index.php?quanly=xemdonhang&khachhang=<?php echo $_SESSION['khachhang_id']; ?>&magiaodich=<?php echo $row_donhang['MAGIAODICH']; ?>">Xem chi tiết</a></td>
-										<td><?php if ($row_donhang['TINHTRANGDON'] == 0) {
-                                            echo 'Đã đặt hàng';
-                                        } else {
+										<td><?php echo $row_donhang['NGAYDATHANG']; ?></td>
+										<td><?php echo number_format($row_donhang['TONGTIEN']).'vnđ'; ?></td>
+										
+										<td><?php if ($row_donhang['TINHTRANG'] == 0) {
+                                            echo 'Đang chờ xử lý';
+                                        } elseif ($row_donhang['TINHTRANG'] == 1) {
                                             echo 'Đã xử lý | Đang giao hàng';
+                                        } elseif ($row_donhang['TINHTRANG'] == 2) {
+                                            echo 'Đã giao hàng';
+                                        } else {
+                                            echo 'Đã hủy';
                                         } ?></td>
 										<td>
-											<?php
-                                            if ($row_donhang['HUYDON'] == 0) {
-                                                ?>
-											<a href="index.php?quanly=xemdonhang&khachhang=<?php echo $_SESSION['khachhang_id']; ?>&magiaodich=<?php echo $row_donhang['MAGIAODICH']; ?>&huydon=1">Yêu cầu hủy</a>
-											<?php
-                                            } elseif ($row_donhang['HUYDON'] == 1) {
-                                                ?>
-											<p>Đang chờ hủy...</p>
-											<?php
-                                            } else {
-                                                echo 'Đã hủy';
-                                            } ?>
+											<a href="index.php?quanly=xemdonhang&khachhang=<?php echo $_SESSION['khachhang_id']; ?>&donhang_id=<?php echo $row_donhang['DONHANG_ID']; ?>">Xem</a> 	
+										</td>
+										<td>
+										<?php if ($row_donhang['TINHTRANG'] == 0) { ?>
+                                            <a href="index.php?quanly=huydon&khachhang=<?php echo $_SESSION['khachhang_id']; ?>&donhang_id=<?php echo $row_donhang['DONHANG_ID']; ?>">Hủy Đơn</a> 
+                                        <?php } ?>
 										</td>
 									</tr>
 									 <?php
@@ -92,45 +93,51 @@
 							<div class="col-md-12">
 								<p>Chi tiết đơn hàng</p><br>
 								<?php
-                                if (isset($_GET['magiaodich'])) {
-                                    $magiaodich = $_GET['magiaodich'];
-                                } else {
-                                    $magiaodich = '';
-                                }
-
-                            $sql_select = oci_parse($con, "SELECT * FROM tbl_giaodich, tbl_khachhang, tbl_sanpham WHERE tbl_giaodich.sanpham_id=tbl_sanpham.sanpham_id AND tbl_khachhang.khachhang_id=tbl_giaodich.khachhang_id AND tbl_giaodich.magiaodich='$magiaodich' ORDER BY tbl_giaodich.giaodich_id DESC");
-                                oci_execute($sql_select);
-                                ?> 
+                                if (isset($_GET['donhang_id'])) {
+                                    $id_donhang = $_GET['donhang_id'];
+                                    $sql_select = oci_parse($con, "SELECT * FROM tbl_chitietdonhang WHERE donhang_id = '$id_donhang'");
+                                    oci_execute($sql_select);
+                                    unset($_SESSION['donhang_id']);
+                                    echo 'Đơn hàng'.' '.$id_donhang; ?> 
+								
 								<table class="table table-bordered ">
 									<tr>
 										<th>Thứ tự</th>
-										<th>Mã giao dịch</th>
+										<th>Mã sản phẩm</th>
+										<th>Hình ảnh</th>
 										<th>Tên sản phẩm</th>
 										<th>Số lượng</th>
-										<th>Ngày đặt</th>
+										<th>Giá</th>
 										
 									</tr>
 									<?php
                                     $i = 0;
                                     while ($row_donhang = oci_fetch_array($sql_select)) {
-                                        ++$i; ?> 
+                                        ++$i;
+                                        $ID = $row_donhang['SANPHAM_ID'];
+                                        $sql_get_tensp = oci_parse($con, "SELECT SANPHAM_NAME, SANPHAM_IMAGE FROM TBL_SANPHAM WHERE SANPHAM_ID = '$ID'");
+                                        oci_execute($sql_get_tensp);
+                                        $row_sanpham = oci_fetch_array($sql_get_tensp); ?> 
 									<tr>
 										<td><?php echo $i; ?></td>
 										
-										<td><?php echo $row_donhang['MAGIAODICH']; ?></td>
+										<td><?php echo $row_donhang['SANPHAM_ID']; ?></td>
+										<td><img src="images/<?php echo $row_sanpham['SANPHAM_IMAGE']; ?>" alt=" " style ="height:120px"  class=""></td>
+										
 									
-										<td><?php echo $row_donhang['SANPHAM_NAME']; ?></td>
+										<td><?php echo $row_sanpham['SANPHAM_NAME']; ?></td>
 
 										<td><?php echo $row_donhang['SOLUONG']; ?></td>
 										
-										<td><?php echo $row_donhang['NGAYTHANG']; ?></td>
+										<td><?php echo $row_donhang['SANPHAM_GIA']; ?></td>
 									
 										
 									</tr>
 									 <?php
-                                    }
-                                    ?> 
+                                    } ?> 
 								</table>
+								<?php
+                                }?>
 							</div>
 							</div>
 

@@ -1,14 +1,14 @@
 <?php
-	session_start();
-	if(isset($_GET['login'])){
- 	$dangxuat = $_GET['login'];
-	 }else{
-	 	$dangxuat = '';
-	 }
-	 if($dangxuat=='dangxuat'){
-	 	session_destroy();
-	 	header('Location: index.php');
-	 }
+    session_start();
+    if (isset($_GET['login'])) {
+        $dangxuat = $_GET['login'];
+    } else {
+        $dangxuat = '';
+    }
+     if ($dangxuat == 'dangxuat') {
+         session_destroy();
+         header('Location: index.php');
+     }
 ?>
 
 <!DOCTYPE html>
@@ -34,15 +34,20 @@
 	<nav class="new navbar navbar-expand-lg navbar-light bg-light">
 	  <div class="collapse navbar-collapse" id="navbarNav">
 	    <ul class="navbar-nav new">
-	      <li class="nav-item active">
+		  <li class="nav-item active">
 	        <a class="nav-link" href="xulydonhang.php">Đơn hàng <span class="sr-only">(current)</span></a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="xulydanhmuc.php">Danh mục</a>
+	        <a class="nav-link" href="xulydanhmuc.php">Danh mục sản phẩm</a>
 	      </li>
-		  
 	      <li class="nav-item">
 	        <a class="nav-link" href="xulysanpham.php">Sản phẩm</a>
+	      </li>
+	         <li class="nav-item">
+	        <a class="nav-link" href="xulydanhmucbaiviet.php">Danh mục bài viết</a>
+	      </li>
+	         <li class="nav-item">
+	        <a class="nav-link" href="xulybaiviet.php">Bài viết</a>
 	      </li>
 	       <li class="nav-item">
 	        <a class="nav-link" href="xulykhachhang.php">Khách hàng</a>

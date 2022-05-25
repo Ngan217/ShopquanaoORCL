@@ -15,12 +15,11 @@
         $path = '../uploads/';
 
         $hinhanh_tmp = $_FILES['hinhanh']['tmp_name'];
-        $sql_insert_product = oci_parse($con, "INSERT INTO tbl_sanpham(sanpham_id,SANPHAM_ACTIVE,sanpham_hot,sanpham_name,sanpham_chitiet,sanpham_mota,sanpham_gia,sanpham_giakhuyenmai,sanpham_soluong,sanpham_image,category_id) values (sequensanpham.nextval,'0','0','$tensanpham','$chitiet','$mota','$gia','$giakhuyenmai','$soluong','$hinhanh','$danhmuc')");
+        $sql_insert_product = oci_parse($con, "INSERT INTO tbl_sanpham(SANPHAM_ACTIVE,sanpham_hot,sanpham_name,sanpham_chitiet,sanpham_mota,sanpham_gia,sanpham_giakhuyenmai,sanpham_soluong,sanpham_image,category_id) values ('0','0','$tensanpham','$chitiet','$mota','$gia','$giakhuyenmai','$soluong','$hinhanh','$danhmuc')");
         oci_execute($sql_insert_product);
         move_uploaded_file($hinhanh_tmp, $path.$hinhanh);
     } elseif (isset($_POST['capnhatsanpham'])) {
         $id_update = $_POST['id_update'];
-        echo $id_update;
         $tensanpham = $_POST['tensanpham'];
         $hinhanh = $_FILES['hinhanh']['name'];
         $hinhanh_tmp = $_FILES['hinhanh']['tmp_name'];
@@ -60,20 +59,20 @@
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 	  <div class="collapse navbar-collapse" id="navbarNav">
 	    <ul class="navbar-nav">
-	      <li class="nav-item active">
+		  <li class="nav-item active">
 	        <a class="nav-link" href="xulydonhang.php">Đơn hàng <span class="sr-only">(current)</span></a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="xulydanhmuc.php">Danh mục</a>
+	        <a class="nav-link" href="xulydanhmuc.php">Danh mục sản phẩm</a>
 	      </li>
-	       <li class="nav-item">
-	        <a class="nav-link" href="xulydanhmucbaiviet.php">Danh mục Bài viết</a>
+	      <li class="nav-item">
+	        <a class="nav-link" href="xulysanpham.php" style ="background-color:lightgrey;Color:black">Sản phẩm</a>
+	      </li>
+	         <li class="nav-item">
+	        <a class="nav-link" href="xulydanhmucbaiviet.php">Danh mục bài viết</a>
 	      </li>
 	         <li class="nav-item">
 	        <a class="nav-link" href="xulybaiviet.php">Bài viết</a>
-	      </li>
-	      <li class="nav-item">
-	        <a class="nav-link" href="xulysanpham.php">Sản phẩm</a>
 	      </li>
 	       <li class="nav-item">
 	        <a class="nav-link" href="xulykhachhang.php">Khách hàng</a>

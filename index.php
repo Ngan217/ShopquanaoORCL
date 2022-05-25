@@ -1,6 +1,6 @@
 <?php
-	session_start();
-	include_once('db/connect.php');
+    session_start();
+    include_once 'db/connect.php';
  ?>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -79,36 +79,44 @@
 </div>
 
 	<?php
-	include('include/topbar.php'); 
-	include('include/menu.php');
-	
+    include 'include/topbar.php';
+    include 'include/menu.php';
 
-	if(isset($_GET['quanly'])){
-		$tam = $_GET['quanly'];
-	}else{
-		$tam = '';
-	}
+    if (isset($_GET['quanly'])) {
+        $tam = $_GET['quanly'];
+    } else {
+        $tam = '';
+    }
 
-	if($tam=='danhmuc'){
-		include('include/danhmuc.php');
-	}elseif($tam=='chitietsp'){
-		include('include/chitietsp.php');
-	}elseif($tam=='giohang') {
-		include('include/giohang.php');
-	}elseif ($tam=='timkiem') {
-		include('include/timkiem.php');
-	}elseif ($tam=='tintuc') {
-		include('include/tintuc.php');
-	}elseif ($tam=='chitiettin') {
-		include('include/chitiettin.php');
-	}elseif ($tam=='xemdonhang') {
-		include('include/xemdonhang.php');
-	}else{
-		include('include/home.php'); 
-	}
-	 
-	include('include/footer.php'); 
-	?>
+    if ($tam == 'danhmuc') {
+        include 'include/danhmuc.php';
+    } elseif ($tam == 'chitietsp') {
+        include 'include/chitietsp.php';
+    } elseif ($tam == 'giohang') {
+        if (isset($_GET['dangxuat'])) {
+            include 'include/home.php';	
+        }
+        include 'include/giohang.php';
+    } elseif ($tam == 'timkiem') {
+        include 'include/timkiem.php';
+    } elseif ($tam == 'tintuc') {
+        include 'include/tintuc.php';
+    } elseif ($tam == 'chitiettin') {
+        include 'include/chitiettin.php';
+    } elseif ($tam == 'xemdonhang') {
+        include 'include/xemdonhang.php';
+    } elseif ($tam == 'huydon') {
+        $id_donhang = $_GET['donhang_id'];
+        $sql_huydon = oci_parse($con, "UPDATE TBL_DONHANG SET TINHTRANG = 3 WHERE DONHANG_ID = '$id_donhang'");
+        oci_execute($sql_huydon);
+		echo '<script>alert("Hủy đơn thành công")</script>';
+        include 'include/xemdonhang.php';
+    } else {
+        include 'include/home.php';
+    }
+
+    include 'include/footer.php';
+    ?>
 	<!-- js-files -->
 	<!-- jquery -->
 	<script src="js/jquery-2.2.3.min.js"></script>

@@ -4,7 +4,7 @@
 	$tukhoa = $_POST['search_product'];
 	
 		
-	$sql_product = oci_parse($con,"SELECT * FROM tbl_sanpham WHERE sanpham_name LIKE '%$tukhoa%' ORDER BY sanpham_id DESC");		
+	$sql_product = oci_parse($con,"SELECT * FROM tbl_sanpham WHERE LOWER(sanpham_name) like LOWER('%$tukhoa%') ORDER BY sanpham_id DESC");		
     oci_execute($sql_product);
 	$title = $tukhoa;
 	}		
@@ -48,7 +48,7 @@
 												<fieldset>
 													<input type="hidden" name="tensanpham" value="<?php echo $row_sanpham['SANPHAM_NAME'] ?>" />
 													<input type="hidden" name="sanpham_id" value="<?php echo $row_sanpham['SANPHAM_ID'] ?>" />
-													<input type="hidden" name="giasanpham" value="<?php echo $row_sanpham['SANPHAM_GIA'] ?>" />
+													<input type="hidden" name="giasanpham" value="<?php echo $row_sanpham['SANPHAM_GIAKHUYENMAI'] ?>" />
 													<input type="hidden" name="hinhanh" value="<?php echo $row_sanpham['SANPHAM_IMAGE'] ?>" />
 													<input type="hidden" name="soluong" value="1" />			
 													<input type="submit" name="themgiohang" value="Thêm giỏ hàng" class="button" />

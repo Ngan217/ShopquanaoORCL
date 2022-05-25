@@ -15,7 +15,7 @@
                     <div class="left-aligned">
                         <div class="left-aligned">
                             <br />
-                            <p style="margin-bottom: 0;">Đặt hàng và thu tiền tận nơi toàn quốc</p>
+                            <p style="margin-bottom: 0;">Giao hàng toàn quốc</p>
                             <h5 class="boxed-content-title">(028) 7307 1441</h5>
                         </div>
                         <br />

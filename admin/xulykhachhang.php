@@ -17,19 +17,19 @@
 	        <a class="nav-link" href="xulydonhang.php">Đơn hàng <span class="sr-only">(current)</span></a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="xulydanhmuc.php">Danh mục</a>
+	        <a class="nav-link" href="xulydanhmuc.php">Danh mục sản phẩm</a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="xulysanpham.php">Sản phẩm</a>
 	      </li>
 	         <li class="nav-item">
-	        <a class="nav-link" href="xulydanhmucbaiviet.php">Danh mục Bài viết</a>
+	        <a class="nav-link" href="xulydanhmucbaiviet.php">Danh mục bài viết</a>
 	      </li>
 	         <li class="nav-item">
 	        <a class="nav-link" href="xulybaiviet.php">Bài viết</a>
 	      </li>
 	       <li class="nav-item">
-	        <a class="nav-link" href="xulykhachhang.php">Khách hàng</a>
+	        <a class="nav-link" href="xulykhachhang.php" style ="background-color:lightgrey;Color:black">Khách hàng</a>
 	      </li>
 	      
 	    </ul>
@@ -41,19 +41,20 @@
 			<div class="col-md-12">
 				<h4>Khách hàng</h4>
 				<?php
-                $sql_select_khachhang = oci_parse($con, 'SELECT * FROM tbl_khachhang, tbl_giaodich WHERE tbl_khachhang.khachhang_id=tbl_giaodich.khachhang_id ORDER BY tbl_khachhang.khachhang_id ASC');  /* GROUP BY tbl_giaodich.magiaodich */
+                $sql_select_khachhang = oci_parse($con, 'SELECT * FROM tbl_khachhang ORDER BY khachhang_id ASC');  /* GROUP BY tbl_giaodich.magiaodich */
 
                 oci_execute($sql_select_khachhang);
                 ?> 
 				<table class="table table-bordered ">
 					<tr>
 						<th>Thứ tự</th>
+						<TH>ID khách hàng</th>
 						<th>Tên khách hàng</th>
 						<th>Số điện thoại</th>
 						<th>Địa chỉ</th>
 						<th>Email</th>
-						<th>Ngày mua</th>
-						<th>Quản lý</th>
+						<th>Số đơn hàng</th>
+						<th>Lịch sử đặt hàng</th>
 					</tr>
 					<?php
                     $i = 0;
@@ -61,14 +62,14 @@
                         ++$i; ?> 
 					<tr>
 						<td><?php echo $i; ?></td>
-						
+						<td><?php echo $row_khachhang['KHACHHANG_ID']; ?></td>
 						<td><?php echo $row_khachhang['NAME']; ?></td>
 						<td><?php echo $row_khachhang['PHONE']; ?></td>
 						<td><?php echo $row_khachhang['ADDRESS']; ?></td>
 						
 						<td><?php echo $row_khachhang['EMAIL']; ?></td>
-						<td><?php echo $row_khachhang['NGAYTHANG']; ?></td>
-						<td><a href="?quanly=xemgiaodich&khachhang=<?php echo $row_khachhang['MAGIAODICH']; ?>">Xem giao dịch</a></td>
+						<td><?php echo $row_khachhang['SODONHANG']; ?></td>
+						<td><a href="xulykhachhang.php?quanly=xemlichsudathang&khachhang_id=<?php echo $row_khachhang['KHACHHANG_ID']; ?>">Xem</a></td>
 					</tr>
 					 <?php
                     }
@@ -77,41 +78,62 @@
 			</div>
 
 			<div class="col-md-12">
-				<h4>Liệt kê lịch sử đơn hàng</h4>
+				<h4>Lịch sử đặt hàng của khách hàng : <?php if (isset($_GET['khachhang_id'])) {
+                        $id = $_GET['khachhang_id'];
+                        $sql_get_TTKhachhang = oci_parse($con, "SELECT KHACHHANG_ID, NAME FROM TBL_KHACHHANG WHERE KHACHHANG_ID = '$id'");
+                        oci_execute($sql_get_TTKhachhang);
+                        $row = oci_fetch_array($sql_get_TTKhachhang);
+                        echo $row['KHACHHANG_ID'].'-'.$row['NAME'];
+                    }
+                 ?> </h4>
 				<?php
-                if (isset($_GET['khachhang'])) {
-                    $magiaodich = $_GET['khachhang'];
-                } else {
-                    $magiaodich = '';
-                }
-                $sql_select = oci_parse($con, "SELECT * FROM tbl_giaodich, tbl_khachhang, tbl_sanpham WHERE tbl_giaodich.sanpham_id=tbl_sanpham.sanpham_id AND tbl_khachhang.khachhang_id=tbl_giaodich.khachhang_id AND tbl_giaodich.magiaodich='$magiaodich' ORDER BY tbl_giaodich.giaodich_id DESC");
-                oci_execute($sql_select);
-                ?> 
+                    if (isset($_GET['khachhang_id'])) {
+                        $id_KH = $_GET['khachhang_id'];
+                    } else {
+                        $id_KH = '';
+                    }
+                    $sql_select = oci_parse($con, "SELECT * FROM tbl_donhang WHERE khachhang_id = '$id_KH'");
+                    oci_execute($sql_select);
+
+                ?>
 				<table class="table table-bordered ">
 					<tr>
 						<th>Thứ tự</th>
-						<th>Mã giao dịch</th>
-						<th>Tên sản phẩm</th>
-						<th>Ngày đặt</th>
+						<th>Mã đơn hàng</th>
+						<th>Tổng tiền</th>
+						<th>Địa chỉ</th>
+						<th>Tình trạng đơn hàng</th>
+						<th>Ngày đặt hàng</th>
 						
 					</tr>
-					<?php
-                    $i = 0;
-                    while ($row_donhang = oci_fetch_array($sql_select)) {
-                        ++$i; ?> 
+					<?php $i = 0;
+                        while ($row_donhang = oci_fetch_array($sql_select)) {
+                            ++$i; ?> 
 					<tr>
 						<td><?php echo $i; ?></td>
 						
-						<td><?php echo $row_donhang['MAGIAODICH']; ?></td>
+						<td><?php echo $row_donhang['DONHANG_ID']; ?></td>
 					
-						<td><?php echo $row_donhang['SANPHAM_NAME']; ?></td>
+						<td><?php echo $row_donhang['TONGTIEN']; ?></td>
 						
-						<td><?php echo $row_donhang['NGAYTHANG']; ?></td>
+						<td><?php echo $row_donhang['DIACHI']; ?></td>
+
+						<td><?php if ($row_donhang['TINHTRANG' == 0]) {
+                                echo 'Đang chờ xử lý';
+                            } elseif ($row_donhang['TINHTRANG' == 1]) {
+                                echo 'Đã xử lý | Đang giao';
+                            } elseif ($row_donhang['TINHTRANG' == 2]) {
+                                echo 'Đã giao';
+                            } else {
+                                echo 'Đã hủy';
+                            } ?></td>
+
+						<td><?php echo $row_donhang['NGAYDATHANG']; ?></td>
 					
 					
 					</tr>
 					 <?php
-                    }
+                        }
                     ?> 
 				</table>
 			</div>

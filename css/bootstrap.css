@@ -243,6 +243,7 @@ caption {
     caption-side: bottom;
 }
 
+
 th {
     text-align: inherit;
 }
@@ -1223,6 +1224,37 @@ pre code {
         -ms-flex: 0 0 66.666667%;
         flex: 0 0 66.666667%;
         max-width: 66.666667%;
+    }
+
+    .container_swap{
+
+        width: 400px;
+        
+    }
+    .div_left{
+
+        width: 200px;
+        
+        float: left;
+        
+        text-align: center;
+        
+        }
+        
+        .div_right{
+        
+        width: 200px;
+        
+        float: left;
+        
+        text-align: center;
+        
+        }
+    .col-md-41 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 66.666667%;
+        flex: 0 0 66.666667%;
+        max-width: 55%;
     }
     .col-md-9 {
         -webkit-box-flex: 0;

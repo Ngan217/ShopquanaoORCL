@@ -10,7 +10,7 @@
             while ($row_slider = oci_fetch_array($sql_slider)) {
                 ?>
 			<div class="carousel-item item1 active">
-			<img src="images/<?php echo $row_slider['SLIDER_IMAGE']; ?>"  style="width:100% ;height:700px; object-fit: cover;object-position: top;"alt="mysider">
+			<img src="images/<?php echo $row_slider['SLIDER_IMAGE']; ?>"  style="width: 100% ;height:700px; object-fit: cover;object-position: top;"alt="mysider">
 				<div class="container">
 				
 				</div>

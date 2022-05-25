@@ -1,28 +1,36 @@
 <?php
  if (isset($_POST['themgiohang'])) {
-     $tensanpham = $_POST['tensanpham'];
-     $sanpham_id = $_POST['sanpham_id'];
-     $hinhanh = $_POST['hinhanh'];
-     $gia = $_POST['giasanpham'];
-     $soluong = $_POST['soluong'];
-     $sql_select_giohang = oci_parse($con, "SELECT * FROM tbl_giohang WHERE tensanpham='$tensanpham'");
-     oci_execute($sql_select_giohang);
-     $count = oci_num_rows($sql_select_giohang);
-     if ($count > 0) {
-         $row_sanpham = oci_fetch_array($sql_select_giohang);
-         echo $row_sanpham;
-         $soluong = $row_sanpham['SOLUONG'] + 1;
-         $sql_giohang = "UPDATE tbl_giohang SET soluong='$soluong' WHERE sanpham_id='$sanpham_id'";
+     if (isset($_SESSION['dangnhap_home'])) {
+         //$id_khachhang = $_SESSION['khachhang_id'];
+         if (isset($_SESSION['khachhang_id'])) {
+             $id_khachhang = $_SESSION['khachhang_id'];
+             //echo $id_khachhang;
+             $tensanpham = $_POST['tensanpham'];
+             $sanpham_id = $_POST['sanpham_id'];
+             $hinhanh = $_POST['hinhanh'];
+             $gia = $_POST['giasanpham'];
+             $soluong = $_POST['soluong'];
+
+             // check san pham trong gio hang
+             $sql_check_cart = oci_parse($con, "Select * from  tbl_giohang where khachhang_id = '$id_khachhang' and sanpham_id = '$sanpham_id'");
+             oci_execute($sql_check_cart);
+             $row_check_cart = oci_fetch_array($sql_check_cart);
+             $count_check_cart = oci_num_rows($sql_check_cart);
+             if ($count_check_cart == 0) {
+                 //echo "chua co san pham nao";
+                 $sql_addtocart = oci_parse($con, "INSERT INTO tbl_giohang(tensanpham,sanpham_id,giakhuyenmai,image,soluong, khachhang_id) values ('$tensanpham','$sanpham_id','$gia','$hinhanh','$soluong','$id_khachhang')");
+                 oci_execute($sql_addtocart);
+             } else {
+                 // echo "da co san pham";
+                 $sql_updatecart = oci_parse($con, "UPDATE tbl_giohang SET soluong= soluong+1 WHERE sanpham_id='$sanpham_id' and khachhang_id = '$id_khachhang'");
+                 oci_execute($sql_updatecart);
+             }
+         } else {
+             echo 'error';
+         }
      } else {
-         $soluong = $soluong;
-         $sql_giohang = "INSERT INTO tbl_giohang(giohang_id,tensanpham,sanpham_id,giasanpham,hinhanh,soluong) values (sequengiohang.nextval,'$tensanpham','$sanpham_id','$gia','$hinhanh','$soluong')";
+         echo '<script>alert("Vui lòng đăng nhập hoặc đăng ký tài khoản để thêm sản phẩm vào giỏ hàng")</script>';
      }
-     //  ECHO $sql_giohang;
-     $insert_row = oci_parse($con, $sql_giohang);
-     oci_execute($insert_row);
- // if($insert_row==0){
-    // 	header('Location:index.php?quanly=chitietsp&id='.$sanpham_id);
-    // }
  } elseif (isset($_POST['capnhatsoluong'])) {
      for ($i = 0; $i < count($_POST['product_id']); ++$i) {
          $sanpham_id = $_POST['product_id'][$i];
@@ -37,14 +45,15 @@
      }
  } elseif (isset($_GET['xoa'])) {
      $id = $_GET['xoa'];
-     $sql_delete = oci_parse($con, "DELETE FROM tbl_giohang WHERE giohang_id='$id'");
+     $id_KH = $_SESSION['khachhang_id'];
+     $sql_delete = oci_parse($con, "DELETE FROM tbl_giohang WHERE sanpham_id='$id' and khachhang_id ='$id_KH'");
      oci_execute($sql_delete);
  } elseif (isset($_GET['dangxuat'])) {
      $id = $_GET['dangxuat'];
      if ($id == 1) {
          unset($_SESSION['dangnhap_home']);
      }
- } elseif (isset($_POST['thanhtoan'])) {
+ } elseif (isset($_POST['themthongtin'])) {
      $name = $_POST['name'];
      $phone = $_POST['phone'];
      $email = $_POST['email'];
@@ -53,11 +62,33 @@
      $address = $_POST['address'];
      $giaohang = $_POST['giaohang'];
 
-     $sql1 = "INSERT INTO tbl_khachhang(khachhang_id,name,phone,email,address,note,giaohang,password) values (sequenkhachhang.nextval,'$name','$phone','$email','$address','$note','$giaohang','$password')";
-     $sql_khachhang = oci_parse($con, $sql1);
+     $sql_checkemail = oci_parse($con, "SELECT email FROM tbl_khachhang WHERE email = '$email'");
+     oci_execute($sql_checkemail);
+     $row_dangky = oci_fetch_array($sql_checkemail);
+     $count = oci_num_rows($sql_checkemail);
+     if ($count > 0) {
+         echo '<script>alert("Email đã được sử dụng")</script>';
+     } else {
+         $sql1 = "INSERT INTO tbl_khachhang(name,phone,email,address,note,giaohang,password) values ('$name','$phone','$email','$address','$note','$giaohang','$password')";
+         $sql_khachhang = oci_parse($con, $sql1);
 
-     oci_execute($sql_khachhang);
+         oci_execute($sql_khachhang);
+         $sql_select_khachhang = oci_parse($con, "SELECT name,khachhang_id FROM tbl_khachhang WHERE email = '$email'");
+         // echo $sql_select_admin;
+         oci_execute($sql_select_khachhang);
+         $row_dangky = oci_fetch_array($sql_select_khachhang);
+         $count1 = oci_num_rows($sql_select_khachhang);
+         if ($count1 > 0) {
+             $_SESSION['dangnhap_home'] = $row_dangky['NAME'];
+             $_SESSION['khachhang_id'] = $row_dangky['KHACHHANG_ID'];
+
+             //header('Location: index.php?quanly=giohang');
+         }
+     }
+
+     ///THANH TOÁN
      //  echo $sql1;
+     /*
      if ($sql_khachhang) {
          $sql2 = 'SELECT * FROM (SELECT * FROM tbl_khachhang ORDER BY khachhang_id DESC) WHERE rownum <= 1';
          $sql_select_khachhang = oci_parse($con, $sql2);
@@ -68,6 +99,8 @@
          $khachhang_id = $row_khachhang['KHACHHANG_ID'];
          $_SESSION['dangnhap_home'] = $row_khachhang['NAME'];
          $_SESSION['khachhang_id'] = $khachhang_id;
+    */
+         /*
          for ($i = 0; $i < count($_POST['thanhtoan_product_id']); ++$i) {
              $sanpham_id = $_POST['thanhtoan_product_id'][$i];
              $soluong = $_POST['thanhtoan_soluong'][$i];
@@ -84,9 +117,18 @@
              $sql_delete_thanhtoan = oci_parse($con, "DELETE FROM tbl_giohang WHERE sanpham_id='$sanpham_id'");
              oci_execute($sql_delete_thanhtoan);
          }
-     }
- } elseif (isset($_POST['thanhtoandangnhap'])) {
+         */
+ } elseif (isset($_POST['dathang'])) {
      $khachhang_id = $_SESSION['khachhang_id'];
+     $total_donhang = $_SESSION['total'];
+     unset($_SESSION['total']);
+     $sql_get_ttkhachhang = oci_parse($con, "SELECT NAME, ADDRESS, SODONHANG FROM TBL_KHACHHANG WHERE KHACHHANG_ID = '$khachhang_id'");
+     oci_execute($sql_get_ttkhachhang);
+     $gettkhachhang = oci_fetch_array($sql_get_ttkhachhang);
+     $ten = $gettkhachhang['NAME'];
+     $diachi = $gettkhachhang['ADDRESS'];
+     $sodonhang = $gettkhachhang['SODONHANG'];
+     /*
      $mahang = rand(0, 9999);
      for ($i = 0; $i < count($_POST['thanhtoan_product_id']); ++$i) {
          $sanpham_id = $_POST['thanhtoan_product_id'][$i];
@@ -102,8 +144,33 @@
          oci_execute($sql_giaodich);
          $sql_delete_thanhtoan = oci_parse($con, "DELETE FROM tbl_giohang WHERE sanpham_id='$sanpham_id'");
          oci_execute($sql_delete_thanhtoan);
+     }*/
+
+     // INSERT DONHANG + CREATE DONHANG_ID
+     $donhang_id = $khachhang_id.'DH'.$sodonhang;
+     //echo $donhang_id;
+     $sql_insert_donhang = oci_parse($con, "INSERT INTO TBL_DONHANG(DONHANG_ID, KHACHHANG_ID, TENKHACHHANG, DIACHI, TONGTIEN) VALUES ('$donhang_id','$khachhang_id','$ten','$diachi','$total_donhang')");
+     oci_execute($sql_insert_donhang);
+     // INSERT CHITIETDONHANG
+     $sql_get_ttsanpham = oci_parse($con, "SELECT * FROM TBL_GIOHANG WHERE KHACHHANG_ID = '$khachhang_id'");
+     oci_execute($sql_get_ttsanpham);
+
+     $count_ttsanpham = oci_num_rows($sql_get_ttsanpham);
+     while ($rows_sanpham = oci_fetch_array($sql_get_ttsanpham)) {
+         $sql_insert_chitietdonhang = oci_parse($con, "INSERT INTO TBL_CHITIETDONHANG(DONHANG_ID, SANPHAM_ID, SOLUONG, SANPHAM_GIA) VALUES ('$donhang_id', '$rows_sanpham[SANPHAM_ID]', '$rows_sanpham[SOLUONG]','$rows_sanpham[GIAKHUYENMAI]')");
+         oci_execute($sql_insert_chitietdonhang);
      }
+     // DELETE GIO HANG
+
+     $sql_delete_giohang = oci_parse($con, "DELETE FROM TBL_GIOHANG WHERE KHACHHANG_ID = '$khachhang_id'");
+     oci_execute($sql_delete_giohang);
+
+     // UPDATE SODONHANG
+     $sql_update_sodonhang = oci_parse($con, "UPDATE TBL_KHACHHANG SET SODONHANG = SODONHANG +1  WHERE KHACHHANG_ID = '$khachhang_id'");
+     oci_execute($sql_update_sodonhang);
+     echo '<script>alert("Đặt hàng thành công")</script>';
  }
+
 ?>
 
 <!-- checkout page -->
@@ -113,20 +180,16 @@
 			<h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
 				Giỏ hàng
 			</h3>
-				<?php if (isset($_SESSION['dangnhap_home'])) {
-    echo '<p style="color:#000;">Xin chào bạn: '.$_SESSION['dangnhap_home'].'<a href="index.php?quanly=giohang&dangxuat=1">Đăng xuất</a></p>';
-} else {
-    echo '';
-}
-                ?>
-				
+            
+			
+			<?php if (isset($_SESSION['dangnhap_home'])) {
+    $id_kh = $_SESSION['khachhang_id'];
+    echo '<p style="color:#000;">Xin chào bạn: '.$_SESSION['dangnhap_home'].'<a href="index.php?quanly=giohang&dangxuat=1">Đăng xuất</a></p>'; ?>
 			<!-- //tittle heading -->
 			<div class="checkout-right">
 			<?php
-            $sql_lay_giohang = oci_parse($con, 'SELECT * FROM tbl_giohang ORDER BY giohang_id DESC');
-            oci_execute($sql_lay_giohang);
-
-            ?>
+            $sql_lay_giohang = oci_parse($con, "SELECT * FROM tbl_giohang where khachhang_id = '$id_kh'");
+    oci_execute($sql_lay_giohang); ?>
 
 				<div class="table-responsive">
 					<form action="" method="POST">
@@ -147,16 +210,16 @@
 						<tbody>
 						<?php
                         $i = 0;
-                        $total = 0;
-                        while ($row_fetch_giohang = oci_fetch_array($sql_lay_giohang)) {
-                            $subtotal = $row_fetch_giohang['SOLUONG'] * $row_fetch_giohang['GIASANPHAM'];
-                            $total += $subtotal;
-                            ++$i; ?>
+    $total = 0;
+    while ($row_fetch_giohang = oci_fetch_array($sql_lay_giohang)) {
+        $subtotal = $row_fetch_giohang['SOLUONG'] * $row_fetch_giohang['GIAKHUYENMAI'];
+        $total += $subtotal;
+        ++$i; ?>
 							<tr class="rem1">
 								<td class="invert"><?php echo $i; ?></td>
 								<td class="invert-image">
-									<a href="single.html">
-										<img src="images/<?php echo $row_fetch_giohang['HINHANH']; ?>" alt=" " height="120" class="img-responsive">
+									<a href="?quanly=chitietsp&id=<?php echo $row_fetch_giohang['SANPHAM_ID']; ?>">
+										<img src="images/<?php echo $row_fetch_giohang['IMAGE']; ?>" alt=" " style =""  class="img-responsive">
 									</a>
 								</td>
 								<td class="invert">
@@ -166,38 +229,38 @@
 									
 								</td>
 								<td class="invert"><?php echo $row_fetch_giohang['TENSANPHAM']; ?></td>
-								<td class="invert"><?php echo number_format($row_fetch_giohang['GIASANPHAM']).'vnđ'; ?></td>
+								<td class="invert"><?php echo number_format($row_fetch_giohang['GIAKHUYENMAI']).'vnđ'; ?></td>
 								<td class="invert"><?php echo number_format($subtotal).'vnđ'; ?></td>
 								<td class="invert">
-									<a href="?quanly=giohang&xoa=<?php echo $row_fetch_giohang['GIOHANG_ID']; ?>">Xóa</a>
+									<a href="?quanly=giohang&xoa=<?php echo $row_fetch_giohang['SANPHAM_ID']; ?>">Xóa</a>
 								</td>
 							</tr>
 							<?php
-                        }
-                            ?>
+    } ?>
 							<tr>
-								<td colspan="7">Tổng tiền : <?php echo number_format($total).'vnđ'; ?></td>
+								<td colspan="7">Tổng tiền : <?php echo number_format($total).'vnđ';
+    $_SESSION['total'] = $total; ?></td>
 
 							</tr>
 							<tr>
 								<td colspan="7"><input type="submit" class="btn btn-success" value="Cập nhật giỏ hàng" name="capnhatsoluong">
-								<?php $sql_giohang_select = oci_parse($con, 'SELECT * FROM tbl_giohang');
-                                oci_execute($sql_giohang_select);
-                                $count_giohang_select = oci_num_rows($sql_giohang_select);
+<?php $id_khachhang = $_SESSION['khachhang_id'];
+    $sql_giohang_select = oci_parse($con, "SELECT * FROM tbl_giohang where khachhang_id = '$id_khachhang'");
+    oci_execute($sql_giohang_select);
+    oci_fetch_array($sql_giohang_select);
+    $count_giohang_select = oci_num_rows($sql_giohang_select);
 
-                                if (isset($_SESSION['dangnhap_home']) && $count_giohang_select > 0) {
-                                    while ($row_1 = oci_fetch_array($sql_giohang_select)) {
-                                        ?>
+    if (isset($_SESSION['dangnhap_home']) && $count_giohang_select > 0) {
+        while ($row_1 = oci_fetch_array($sql_giohang_select)) {
+            ?>
 								
-								<input type="hidden" name="thanhtoan_product_id[]" value="<?php echo $row_1['SANPHAM_ID']; ?>">
-								<input type="hidden" name="thanhtoan_soluong[]" value="<?php echo $row_1['SOLUONG']; ?>">
-								<?php
-                                    } ?>
-								<input type="submit" class="btn btn-primary" value="Thanh toán giỏ hàng" name="thanhtoandangnhap">
-		
-								<?php
-                                }
-                                ?>
+				<input type="hidden" name="thanhtoan_product_id[]" value="<?php echo $row_1['SANPHAM_ID']; ?>">
+				<input type="hidden" name="thanhtoan_soluong[]" value="<?php echo $row_1['SOLUONG']; ?>">
+<?php
+        } ?>
+				<input type="submit" class="btn btn-primary" value="Đặt hàng" name="dathang">
+<?php
+    } ?>
 								
 								</td>
 							
@@ -207,12 +270,14 @@
 					</form>
 				</div>
 			</div>
+            <?php
+} ?>
 			<?php
             if (!isset($_SESSION['dangnhap_home'])) {
                 ?>
 			<div class="checkout-left">
 				<div class="address_form_agile mt-sm-5 mt-4">
-					<h4 class="mb-sm-4 mb-3">Thêm địa chỉ giao hàng</h4>
+					<h4 class="mb-sm-4 mb-3">Thêm thông tin khách hàng</h4>
 					<form action="" method="post" class="creditly-card-form agileinfo_form">
 						<div class="creditly-wrapper wthree, w3_agileits_wrapper">
 							<div class="information-wrapper">
@@ -239,7 +304,7 @@
 										<input type="text" class="form-control" placeholder="Password" name="password" required="">
 									</div>
 									<div class="controls form-group">
-										<textarea style="resize: none;" class="form-control" placeholder="Ghi chú" name="note" required=""></textarea>  
+										<textarea style="resize: none;" class="form-control" placeholder="Ghi chú" name="note" ></textarea>  
 									</div>
 									<div class="controls form-group">
 										<select class="option-w3ls" name="giaohang">
@@ -251,23 +316,15 @@
 										</select>
 									</div>
 								</div>
-								<?php
-                                $sql_lay_giohang = oci_parse($con, 'SELECT * FROM tbl_giohang ORDER BY giohang_id DESC');
-                oci_execute($sql_lay_giohang);
-                while ($row_thanhtoan = oci_fetch_array($sql_lay_giohang)) {
-                    ?>
-									<input type="hidden" name="thanhtoan_product_id[]" value="<?php echo $row_thanhtoan['SANPHAM_ID']; ?>">
-									<input type="hidden" name="thanhtoan_soluong[]" value="<?php echo $row_thanhtoan['SOLUONG']; ?>">
-								<?php
-                } ?>
-								<input type="submit" name="thanhtoan" class="btn btn-success" style="width: 20%" value="Thanh toán">
+								
+								<input type="submit"  name="themthongtin" class="btn btn-success" style="width: 20%" value="Thêm thông tin">
 								
 							</div>
 						</div>
 					</form>
 					
 				</div>
-			</div>
+			</div> 
 			<?php
             }
             ?>
