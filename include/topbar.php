@@ -81,7 +81,7 @@
 					<ul>
 
 						<li class="text-center border-right text-white">
-							<i class="fas fa-phone mr-2"></i>  012 3456 7890
+							<i class="fas fa-phone mr-2"></i>  0123 456 789
 						</li>
 						<li class="text-center border-right text-white">
 							<a href="#" data-toggle="modal" data-target="#dangnhap" class="text-white">

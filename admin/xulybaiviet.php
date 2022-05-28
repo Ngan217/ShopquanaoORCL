@@ -130,7 +130,7 @@
 				<h4>Thêm bài viết</h4>
 				
 				<form action="" method="POST" enctype="multipart/form-data">
-					<label>Tên sản phẩm</label>
+					<label>Tên bài viết</label>
 					<input type="text" class="form-control" name="tenbaiviet" placeholder="Tên bài viết"><br>
 					<label>Hình ảnh</label>
 					<input type="file" class="form-control" name="hinhanh"><br>

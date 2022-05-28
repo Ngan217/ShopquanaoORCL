@@ -125,30 +125,21 @@
      $sql_get_ttkhachhang = oci_parse($con, "SELECT NAME, ADDRESS, SODONHANG FROM TBL_KHACHHANG WHERE KHACHHANG_ID = '$khachhang_id'");
      oci_execute($sql_get_ttkhachhang);
      $gettkhachhang = oci_fetch_array($sql_get_ttkhachhang);
+
+     $SQL_DEM = oci_parse($con, "SELECT COUNT(SANPHAM_ID) FROM TBL_GIOHANG WHERE KHACHHANG_ID = $khachhang_id");
+     $DEM = oci_execute($SQL_DEM);
+
      $ten = $gettkhachhang['NAME'];
      $diachi = $gettkhachhang['ADDRESS'];
      $sodonhang = $gettkhachhang['SODONHANG'];
-     /*
-     $mahang = rand(0, 9999);
-     for ($i = 0; $i < count($_POST['thanhtoan_product_id']); ++$i) {
-         $sanpham_id = $_POST['thanhtoan_product_id'][$i];
-         $soluong = $_POST['thanhtoan_soluong'][$i];
-         $chung = 'sequendonhang.nextval';
-         $sql5 = "INSERT INTO tbl_donhang(donhang_id,sanpham_id,khachhang_id,soluong,mahang) values ($chung,'$sanpham_id','$khachhang_id','$soluong','$mahang')";
-         $sql_donhang = oci_parse($con, $sql5);
-         oci_execute($sql_donhang);
-         echo $sql5;
-         $sql6 = "INSERT INTO tbl_giaodich(giaodich_id,ngaythang,sanpham_id,soluong,magiaodich,khachhang_id) values ($chung,current_timestamp,'$sanpham_id','$soluong','$mahang','$khachhang_id')";
-         $sql_giaodich = oci_parse($con, $sql6);
-         echo $sql6;
-         oci_execute($sql_giaodich);
-         $sql_delete_thanhtoan = oci_parse($con, "DELETE FROM tbl_giohang WHERE sanpham_id='$sanpham_id'");
-         oci_execute($sql_delete_thanhtoan);
-     }*/
 
      // INSERT DONHANG + CREATE DONHANG_ID
      $donhang_id = $khachhang_id.'DH'.$sodonhang;
+
+     $sql_use_procedure = oci_parse($con, "BEGIN DATHANG('$donhang_id', '$khachhang_id', '$total_donhang', '$ten', '$diachi','$DEM'); END;");
+     oci_execute($sql_use_procedure);
      //echo $donhang_id;
+     /*
      $sql_insert_donhang = oci_parse($con, "INSERT INTO TBL_DONHANG(DONHANG_ID, KHACHHANG_ID, TENKHACHHANG, DIACHI, TONGTIEN) VALUES ('$donhang_id','$khachhang_id','$ten','$diachi','$total_donhang')");
      oci_execute($sql_insert_donhang);
      // INSERT CHITIETDONHANG
@@ -167,7 +158,7 @@
 
      // UPDATE SODONHANG
      $sql_update_sodonhang = oci_parse($con, "UPDATE TBL_KHACHHANG SET SODONHANG = SODONHANG +1  WHERE KHACHHANG_ID = '$khachhang_id'");
-     oci_execute($sql_update_sodonhang);
+     oci_execute($sql_update_sodonhang);*/
      echo '<script>alert("Đặt hàng thành công")</script>';
  }
 
